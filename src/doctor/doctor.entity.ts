@@ -22,5 +22,4 @@ export class DoctorEntity extends BaseEntity {
 
     @Column({default: ''})
     postalCode: string;
-
 }
