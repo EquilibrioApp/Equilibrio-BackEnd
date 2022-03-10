@@ -7,7 +7,7 @@ import { CircunferenciaEntity } from 'src/circunferencias/circunferencia.entity'
 import { CircunferenciasModule } from 'src/circunferencias/circunferencias.module';
 import { CircunferenciasService } from 'src/circunferencias/circunferencias.service';
 import { IndiceEntity } from 'src/indices/indice.entity';
-import { IndicesModule } from 'indices.module';
+import { IndicesModule } from 'src/indices/indices.module';
 import { IndicesService } from 'src/indices/indices.service';
 import { MetaEntity } from 'src/metas/meta.entity';
 import { MetasModule } from 'src/metas/metas.module';
