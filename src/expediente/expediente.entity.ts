@@ -1,10 +1,13 @@
 import { AvanceEntity } from "src/avances/avances.entity";
 import { MetaEntity } from "src/metas/meta.entity";
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, BaseEntity, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, BaseEntity, CreateDateColumn, UpdateDateColumn, PrimaryColumn, Generated} from "typeorm";
 
 @Entity()
 export class ExpedienteEntity extends BaseEntity{
-    @PrimaryGeneratedColumn('uuid')//'uuid'
+    // @PrimaryColumn()
+    // @Generated('uuid')
+    // id:string;
+    @PrimaryGeneratedColumn("uuid")//'uuid'
     id: string;
 
     @Column({default : ""})

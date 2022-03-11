@@ -26,7 +26,7 @@ import { UsersModule } from 'src/users/users.module';
       synchronize: true,
       retryDelay: 3000,
       retryAttempts: 5,
-      // dropSchema: true
+    // dropSchema: true
     }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule,
         PatientModule, DoctorModule, AuthModule, UsersModule
   
