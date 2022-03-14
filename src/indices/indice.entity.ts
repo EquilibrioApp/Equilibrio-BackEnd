@@ -7,12 +7,12 @@ export class IndiceEntity extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')//'uuid'
     id: string;
 
-    // @PrimaryColumn()
-    // avanceId: string;
+    @PrimaryColumn()
+    avanceId: string;
 
-    // @OneToOne(() => AvanceEntity, avance => avance.indice) 
-    // @JoinColumn()
-    // avance: AvanceEntity;
+    @OneToOne(() => AvanceEntity, avance => avance.indice) 
+    @JoinColumn()
+    avance: AvanceEntity;
     
     @Column("numeric", { precision: 14, scale: 4 }) 
     masaCorporal: number;

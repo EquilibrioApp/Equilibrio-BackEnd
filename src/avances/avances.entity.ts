@@ -29,8 +29,8 @@ export class AvanceEntity extends BaseEntity {
     @OneToOne(() => CircunferenciaEntity, circunferencia => circunferencia.avance, {eager: true})
     circunferencia: CircunferenciaEntity;
 
-    // @OneToOne(() => IndiceEntity, indice => indice.avance, {eager: true})
-    // indice: IndiceEntity;
+    @OneToOne(() => IndiceEntity, indice => indice.avance, {eager: true})
+    indice: IndiceEntity;
 
     @OneToOne(() => PlieguesEntity, pliegue => pliegue.avance, {eager: true})
     pliegue: PlieguesEntity;

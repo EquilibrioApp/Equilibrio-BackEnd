@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import { Repository } from 'typeorm';
 import { RegistroEntity } from './registro.entity';
 
@@ -7,11 +8,22 @@ import { RegistroEntity } from './registro.entity';
 export class RegistrosService {//TODO operaciones de la evaluación 
     constructor(
         @InjectRepository(RegistroEntity)private readonly registroRepo:Repository<RegistroEntity>,
+        @InjectRepository(ExpedienteEntity)private readonly expoRepo:Repository<ExpedienteEntity>,
     ){}
     
     async create(exp: Partial<RegistroEntity>): Promise<RegistroEntity> {
-        const item = this.registroRepo.create(exp);
-        return this.registroRepo.save(item);
+        const item = await this.expoRepo.findOne(exp.id);
+        if(item === undefined){
+        throw new NotFoundException;
+        }else {
+         const registro = new RegistroEntity();
+         registro.expediente = item;
+        const expo =  await this.registroRepo.create(exp);
+        this.registroRepo.save(expo);
+        } 
+        return 
+        // const item = this.registroRepo.create(exp);
+        // return this.registroRepo.save(item);
     }
 
     async find(){

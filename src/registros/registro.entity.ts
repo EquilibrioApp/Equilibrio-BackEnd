@@ -53,6 +53,6 @@ export class RegistroEntity extends BaseEntity{  //TODO relacion
     @Column() 
     questionTwelve: number;
 
-    // @ManyToOne(() => ExpedienteEntity, expediente => expediente.registros)
-    // expediente: ExpedienteEntity;
+    @ManyToOne(() => ExpedienteEntity, expediente => expediente.registros)
+    expediente: ExpedienteEntity;
 }

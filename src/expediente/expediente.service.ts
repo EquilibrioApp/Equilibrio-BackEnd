@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AvancesService } from 'src/avances/avances.service';
+import { UserEntity } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { ExpedienteDto, ExpedienteResponseDto } from './dto/expediente.dto';
 import { ExpedienteEntity } from './expediente.entity';
@@ -10,12 +11,23 @@ import { ExpedienteEntity } from './expediente.entity';
 export class ExpedienteService {
     constructor(
         @InjectRepository(ExpedienteEntity)private readonly expedienteRepo:Repository<ExpedienteEntity>,
+        @InjectRepository(UserEntity)private readonly doctorRepo:Repository<UserEntity>,
         private avancesService : AvancesService,
     ){}
     
     async create(exp: Partial<ExpedienteEntity>): Promise<ExpedienteEntity> {
-        const item = this.expedienteRepo.create(exp);
-        return this.expedienteRepo.save(item);
+        const item = await this.doctorRepo.findOne(exp.id);
+        if(item === undefined){
+        throw new NotFoundException;
+        }else {
+        const expediente = new ExpedienteEntity();
+        expediente.doctor = item;
+        const expo =  await this.expedienteRepo.create(exp);
+        this.expedienteRepo.save(expo)
+        // const newPatient = await this.patientRepository.create(patient);
+        // this.patientRepository.save(newPatient);
+        }
+        return 
     }
 
     async find(){

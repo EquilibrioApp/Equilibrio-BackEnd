@@ -48,7 +48,6 @@ export class UsersDto {
 
     //Info en caso de ser paciente
 
-    
     nutriCodigo?: string;
     
 }

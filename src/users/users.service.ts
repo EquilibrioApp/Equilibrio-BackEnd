@@ -1,13 +1,15 @@
 import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { UsersDto, UserResponseDto } from './dto/users.dto';
 import { UserEntity } from './users.entity';
 import { encodePassword } from '../utils/bcrypt';
 import { DoctorEntity } from '../doctor/doctor.entity';
 import { PatientEntity } from '../patient/patient.entity';
+import { PatientService } from 'src/patient/patient.service';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +21,8 @@ export class UsersService {
       private readonly doctorRepository: Repository<DoctorEntity>,
       @InjectRepository(PatientEntity)//Inyectas el repositorio que necesites y al cual le vas a pasar el id
       private readonly patientRepository: Repository<PatientEntity>,
-      private httpService: HttpService,
+      @InjectRepository(ExpedienteEntity)//Inyectas el repositorio que necesites y al cual le vas a pasar el id
+      private readonly expoRepository: Repository<ExpedienteEntity>,
     ){}
 
     //Creación del usuario
@@ -56,12 +59,17 @@ export class UsersService {
   
         }
         else{
-          const patient = new PatientEntity();
-          patient.nutriCodigo = user.nutriCodigo;
-          patient.user = response;
-          
-          const newPatient = await this.patientRepository.create(patient);
-          this.patientRepository.save(newPatient);
+          const item = await this.expoRepository.findOne(user.nutriCodigo);
+          if(item === undefined){
+            throw new NotFoundException;
+          }else {
+            const patient = new PatientEntity();
+            patient.nutriCodigo = item;
+            patient.user = response; // TODO caso de pruebas 
+            
+            const newPatient = await this.patientRepository.create(patient);
+            this.patientRepository.save(newPatient);
+          }
         }
   
         //TODO No regresar la contrasena al crear usuarios

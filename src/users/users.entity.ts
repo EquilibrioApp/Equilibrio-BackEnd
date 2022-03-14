@@ -1,5 +1,6 @@
 import { Exclude, instanceToPlain } from 'class-transformer';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity extends BaseEntity {
@@ -33,6 +34,9 @@ export class UserEntity extends BaseEntity {
     
     @Column({default: ''})
     phoneNumber: string;
+
+    @OneToMany(()=> ExpedienteEntity, expediente => expediente.doctor)
+    expediente:ExpedienteEntity;
 
     toJSON(){
         return instanceToPlain(this);
