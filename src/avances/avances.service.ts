@@ -1,44 +1,45 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CircunferenciasService } from 'src/circunferencias/circunferencias.service';
-import { IndicesService } from 'src/indices/indices.service';
-import { PesosService } from 'src/pesos/pesos.service';
-import { PlieguesService } from 'src/pliegues/pliegues.service';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import {  Repository  }  from  'typeorm' ;
 import { AvanceEntity } from './avances.entity';
+import { AvancesDto } from './dto/avances.dto';
 
 @Injectable()
 export class AvancesService {
     constructor(
-        @InjectRepository(AvanceEntity)private readonly avanceEntity:Repository<AvanceEntity>,
-        private pesosService : PesosService,
-        private plieguesService : PlieguesService,
-        private indicesService : IndicesService,
-        private circunferenciasService : CircunferenciasService,  
+        @InjectRepository(AvanceEntity)private readonly avanceRepo:Repository<AvanceEntity>,
+        @InjectRepository(ExpedienteEntity)private readonly expoRepo:Repository<ExpedienteEntity>,
     ){}
     
-    async create(exp: Partial<AvanceEntity>): Promise<AvanceEntity> {
-        const item = this.avanceEntity.create(exp);
-        return this.avanceEntity.save(item);
+    async create(expediente:ExpedienteEntity, exp: Partial<AvancesDto>): Promise<AvancesDto> {
+        // const item = this.avanceEntity.create(exp);
+        // return this.avanceEntity.save(item);
+        const avance = new AvanceEntity();
+        avance.expediente = expediente;
+        avance.observacion = exp.observacion;
+        const item =  await this.avanceRepo.create(avance);
+        return this.avanceRepo.save(item);
+        
     }
 
     async find(){
-        return this.avanceEntity.find();
+        return this.avanceRepo.find();
     }
 
     async findOne( id : string){
-        const item = await this.avanceEntity.findOne(id);
+        const item = await this.avanceRepo.findOne(id);
         if(!item) throw new NotFoundException();
         return item;
     }
 
     async update(id: string, exp: Partial<AvanceEntity>): Promise<AvanceEntity> {
         const item = await this.findOne(id);
-        return this.avanceEntity.save({...item, ...exp});
+        return this.avanceRepo.save({...item, ...exp});
     }
 
     async remove(id: string, expedienteId: string): Promise<AvanceEntity> {
         const item = await this.findOne(id);
-        return this.avanceEntity.remove(item);
+        return this.avanceRepo.remove(item);
     }
 }

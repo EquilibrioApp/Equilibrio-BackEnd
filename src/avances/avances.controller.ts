@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import { AvanceEntity } from './avances.entity';
 import { AvancesService } from './avances.service';
+import { AvancesDto } from './dto/avances.dto';
 
-@Controller('avance')
+@Controller(':expediente')
 export class AvancesController {
     constructor(
         private avancesService:AvancesService,
@@ -19,8 +21,8 @@ export class AvancesController {
     }
 
     @Post()
-    creteMera(@Body() body: any): Promise<AvanceEntity> {
-        return this.avancesService.create(body);
+    creteMera(@Param('expediente') expediente : ExpedienteEntity, @Body() body: AvancesDto): Promise<AvancesDto> {
+        return this.avancesService.create(expediente, body);
     }
 
     @Put(':id') 

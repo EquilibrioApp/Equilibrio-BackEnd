@@ -1,6 +1,6 @@
+import { UserEntity } from "src/users/users.entity";
 import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToMany, ManyToOne, BaseEntity} from "typeorm";
 
- //TODO Relacion 1>M
 @Entity()
 export class EquivalenciaEntity extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')//'uuid'
@@ -18,6 +18,9 @@ export class EquivalenciaEntity extends BaseEntity{
     @Column({default : ""})
     racion : string; 	
 
+    @ManyToOne(()=> UserEntity, doctor => doctor.equivalencia, {eager: true})
+    @JoinColumn()
+    doctor:UserEntity;
 }
 /*
  id_avance serial primary key, 

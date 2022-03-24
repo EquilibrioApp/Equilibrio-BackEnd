@@ -19,7 +19,7 @@ export class UsersController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('/profile/:id')//Buscar usuario mediante el Id
+    @Get('/:id')//Buscar usuario mediante el Id
     findById(@Param('id') id:string): Promise<UsersDto> {
       return this.usersService.findById(id);
     }

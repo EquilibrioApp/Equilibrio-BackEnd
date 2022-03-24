@@ -18,6 +18,6 @@ import { ExpedienteService } from './expediente.service';
             AvancesModule, CircunferenciasModule, IndicesModule,
             MetasModule, PesosModule, PlieguesModule, EjercicioModule ],
   providers: [ExpedienteService],
-  controllers: [ExpedienteController]
+  controllers: [ExpedienteController],
 })
 export class ExpedienteModule {}

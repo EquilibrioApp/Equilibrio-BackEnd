@@ -3,13 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typ
 @Entity()
 export class AgendaEntity{
     @PrimaryGeneratedColumn('uuid')//'uuid'
-    id_agenda: string;
-    
-    @Column({default:""})
-    idPaciente: string;
-
-    @Column({default:""})
-    idEspecialista: string;
+    id: string;
     
     @Column({default:""})
     iCalUID : string;
@@ -22,6 +16,12 @@ export class AgendaEntity{
 
     @Column({default:""})
     attendees: string;
+
+    @Column({default:""})
+    paciente: string;
+
+    @Column({default:""})
+    especialista: string;
 }
 /*
  id?: string;

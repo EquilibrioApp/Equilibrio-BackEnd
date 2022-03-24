@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AgendaModule } from 'src/agenda/agenda.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { AvancesModule } from 'src/avances/avances.module';
 import { DoctorModule } from 'src/doctor/doctor.module';
 import { EquivalenciaModule } from 'src/equivalencia/equivalencia.module';
 import { ExpedienteModule } from 'src/expediente/expediente.module';
@@ -28,8 +29,7 @@ import { UsersModule } from 'src/users/users.module';
       retryAttempts: 5,
       // dropSchema: true
     }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule,
-        PatientModule, DoctorModule, AuthModule, UsersModule
-  
+        PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule
   ],
   controllers: []
 })

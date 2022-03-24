@@ -1,25 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { resolve } from 'path/win32';
+import { User } from 'src/auth/dto/auth.dto';
+import { UserEntity } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
-import * as xlsm from "ts-xlsx";
-import {WorkBook, WorkSheet} from 'xlsx';
+import { EquivalenciaDto } from './dto/equivalencias.dto';
 import { EquivalenciaEntity } from './equivalencia.entity';
 
 @Injectable()
 export class EquivalenciaService {
 
     constructor(
-        // private httpService: HttpService,
         @InjectRepository(EquivalenciaEntity)private readonly equivalenciaRepo:Repository<EquivalenciaEntity>,
+        @InjectRepository(UserEntity)private readonly userRepo:Repository<UserEntity>,
     ){}
 
-    convertFile(equivalencia : Partial<EquivalenciaEntity>)  {
-        const excel = xlsm.readFile('./HojaDeEquivalencia');
-        const nombreHoja = excel.Sheets["Hoja"];
-        const datos = xlsm.utils.sheet_to_json(nombreHoja[0]);
-        // const datos = await XLSX.utils.sheet_to_json(excel.Sheets[nombreHoja[3]]);
-        console.log(datos);
-        return datos;
+    async create(doctor: UserEntity, exp: Partial<EquivalenciaDto>): Promise<EquivalenciaDto> {
+        const alimento = new EquivalenciaEntity();
+        alimento.nombre = exp.nombre;
+        alimento.grupoAlimencio = exp.grupoAlimencio;
+        alimento.subgrupo = exp.subgrupo;
+        alimento.racion = exp.racion ; 	
+        alimento.doctor = doctor;
+        console.log(alimento);
+        const item = this.equivalenciaRepo.create(alimento);
+        return this.equivalenciaRepo.save(item);
+    }
+
+    async find(){
+        return this.equivalenciaRepo.find();
+    }
+
+    async findOne( id : string){
+        const item = await this.equivalenciaRepo.findOne(id);
+        if(!item) throw new NotFoundException();
+        return item;
+    }
+
+    async update(id: string, exp: Partial<EquivalenciaEntity>): Promise<EquivalenciaEntity> {
+        const item = await this.findOne(id);
+        return this.equivalenciaRepo.save({...item, ...exp});
+    }
+
+    async remove(id: string): Promise<EquivalenciaEntity> {
+        const item = await this.findOne(id);
+        return this.equivalenciaRepo.remove(item);
     }
 }

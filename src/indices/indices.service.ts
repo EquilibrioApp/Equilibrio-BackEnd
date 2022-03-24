@@ -77,7 +77,7 @@ export class IndicesService {
             return mm;
         }
 
-        createMo(altura:number, biestiloideo:number, femoral:number){ //TODO 
+        createMo(altura:number, biestiloideo:number, femoral:number){ 
             //Formula = 3.02*(estatura2* diámetro biestiloideo * diámetro femoral * 400) 0.712
             var mo = 3.02 * Math.pow(((Math.pow((altura/100),2))*(biestiloideo/100)*(femoral/100)*400),0.712);
             return mo;
@@ -109,7 +109,6 @@ export class IndicesService {
 
 
     //TODO PESO ACTUAL Y PESO PERDIDO
-//TODO ENTIDAD EJERCICIO
 }
 
 

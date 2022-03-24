@@ -3,16 +3,12 @@ import { ExpedienteEntity } from "src/expediente/expediente.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class RegistroEntity extends BaseEntity{  //TODO relacion 
+export class RegistroEntity extends BaseEntity{ 
     @PrimaryGeneratedColumn('uuid')//'uuid'
     id: string;
 
-    // @PrimaryColumn( )
-    // avanceId: string;
-
-    // @OneToOne(() => AvanceEntity, avance => avance.peso) 
-    // @JoinColumn()
-    // avance: AvanceEntity;
+    @ManyToOne(() => ExpedienteEntity, expediente => expediente.registros)
+    expediente: ExpedienteEntity;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -52,7 +48,4 @@ export class RegistroEntity extends BaseEntity{  //TODO relacion
 
     @Column() 
     questionTwelve: number;
-
-    @ManyToOne(() => ExpedienteEntity, expediente => expediente.registros)
-    expediente: ExpedienteEntity;
 }

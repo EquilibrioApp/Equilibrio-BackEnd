@@ -1,6 +1,7 @@
 import { Exclude, instanceToPlain } from 'class-transformer';
+import { AgendaEntity } from 'src/agenda/agenda.entity';
 import { ExpedienteEntity } from 'src/expediente/expediente.entity';
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity extends BaseEntity {
@@ -37,6 +38,15 @@ export class UserEntity extends BaseEntity {
 
     @OneToMany(()=> ExpedienteEntity, expediente => expediente.doctor)
     expediente:ExpedienteEntity;
+
+    @OneToMany(()=> ExpedienteEntity, equivalencia => equivalencia.doctor)
+    equivalencia:ExpedienteEntity;
+
+    @OneToOne(()=> AgendaEntity, agendaDoctor => agendaDoctor.especialista)
+    agendaDoctor:AgendaEntity;
+
+    @OneToOne(()=> AgendaEntity, agendaPaciente => agendaPaciente.paciente)
+    agendaPaciente:AgendaEntity;
 
     toJSON(){
         return instanceToPlain(this);

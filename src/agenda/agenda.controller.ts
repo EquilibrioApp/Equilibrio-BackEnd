@@ -11,9 +11,9 @@ export class AgendaController {
         return this.agendaService.findAll();
     }
 
-    @Get(':id_agenda')
-    findOne(@Param('id_agenda') id_agenda: string) {
-        return this.agendaService.findOne(id_agenda);
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return this.agendaService.findOne(id);
     }
 
     @Post('/create')
@@ -21,13 +21,13 @@ export class AgendaController {
         return this.agendaService.createAgenda(agenda);
     }
 
-    @Put(':id_agenda')
-    update(@Param('id_agenda') id_agenda: string, @Body() body: any) {
-        return this.agendaService.updateAgenda(id_agenda, body);
+    @Put(':id')
+    update(@Param('id') id: string, @Body() body: any) {
+        return this.agendaService.updateAgenda(id, body);
     }
 
-    @Delete(':id_agenda')
-    delete(@Param('id_agenda') id_agenda: string) {
-        return this.agendaService.removeAgenda(id_agenda);
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+        return this.agendaService.removeAgenda(id);
     }
 }

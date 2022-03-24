@@ -1,10 +1,13 @@
+import { UserEntity } from "src/users/users.entity";
+
 //Estructura que va a llegar al endpoint del registro del expediente
 export class ExpedienteDto {
   //Expediente 
   id?: string;
-  idEspecialista: string;
-  idPaciente: string;
-  //id_meta: string;
+  doctorId : UserEntity;
+  sexo: string;
+  createdAt: Date;
+  updatedAt: Date;
   alturaPaciente: number;
   //avances: AvancesPostEntity[]
   //Meta

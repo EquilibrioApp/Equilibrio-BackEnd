@@ -13,7 +13,7 @@ export class CircunferenciasController {
         return this.circunferenciaService.find();
     }
 
-    @Get(':id') //TODO mostrar datos de otras tablas
+    @Get(':id') 
     findOne(@Param('id') id: string){
         return this.circunferenciaService.findOne(id);
     }

@@ -10,6 +10,10 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany
 export class ExpedienteEntity extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')//'uuid'
     id: string;
+    
+    @ManyToOne(()=> UserEntity, doctor => doctor.expediente, {eager: true})
+    @JoinColumn()
+    doctor:UserEntity;
 
     @Column({default : ""})
     sexo: string;
@@ -23,12 +27,8 @@ export class ExpedienteEntity extends BaseEntity{
     @Column("decimal", { precision: 5, scale: 2 })
     alturaPaciente: number;
 
-    @OneToMany(()=> AvanceEntity, avance => avance.expediente)
+    @OneToMany(()=> AvanceEntity, avance => avance.expediente, {eager:true})
     avances:AvanceEntity;
-
-    @ManyToOne(()=> UserEntity, doctor => doctor.expediente, {eager: true})
-    @JoinColumn()
-    doctor:UserEntity;
 
     @OneToMany(()=> RegistroEntity, registros => registros.expediente, {eager: true})
     registros:RegistroEntity;

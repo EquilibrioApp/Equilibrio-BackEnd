@@ -14,8 +14,8 @@ export class AgendaService {
         return this.agendaRepo.find();
     }
 
-    findOne(id_agenda:string){
-        return this.agendaRepo.findOne(id_agenda);
+    findOne(id:string){
+        return this.agendaRepo.findOne(id);
     }
     
     createAgenda( agenda:AgendaDto):Promise<AgendaResponseDto>{
@@ -24,14 +24,14 @@ export class AgendaService {
         return this.agendaRepo.save(newAgenda);
     }
 
-    async updateAgenda( id_agenda:string, body: any){
-        const agenda  = await this.agendaRepo.findOne(id_agenda);
+    async updateAgenda( id:string, body: any){
+        const agenda  = await this.agendaRepo.findOne(id);
         this.agendaRepo.merge(agenda, body);
         return this.agendaRepo.save(agenda);
     }
 
-    async removeAgenda(id_agenda:string){
-        await this.agendaRepo.delete(id_agenda);
+    async removeAgenda(id:string){
+        await this.agendaRepo.delete(id);
         return true;
     }
 }

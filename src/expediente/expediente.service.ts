@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/auth/dto/auth.dto';
 import { AvancesService } from 'src/avances/avances.service';
 import { UserEntity } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
@@ -12,20 +13,20 @@ export class ExpedienteService {
     constructor(
         @InjectRepository(ExpedienteEntity)private readonly expedienteRepo:Repository<ExpedienteEntity>,
         @InjectRepository(UserEntity)private readonly doctorRepo:Repository<UserEntity>,
-        private avancesService : AvancesService,
     ){}
     
-    async create(exp: Partial<ExpedienteEntity>): Promise<ExpedienteEntity> {
-        const item = await this.doctorRepo.findOne(exp.id);
+    async create(doctor : UserEntity, exp: Partial<ExpedienteDto>): Promise<ExpedienteDto> {
+        const item = await this.doctorRepo.findOne(doctor);
         if(item === undefined){
-        throw new NotFoundException;
+            throw new NotFoundException;
         }else {
-        const expediente = new ExpedienteEntity();
-        expediente.doctor = item;
-        const expo =  await this.expedienteRepo.create(exp);
-        this.expedienteRepo.save(expo)
-        // const newPatient = await this.patientRepository.create(patient);
-        // this.patientRepository.save(newPatient);
+            const expediente = new ExpedienteEntity();
+            console.log(item);
+            expediente.doctor = doctor;
+            expediente.alturaPaciente = exp.alturaPaciente;
+            expediente.sexo = exp.sexo;
+            const expo =  await this.expedienteRepo.create(expediente);
+            this.expedienteRepo.save(expo)
         }
         return 
     }
@@ -36,6 +37,12 @@ export class ExpedienteService {
 
     async findOne( id : string){
         const item = await this.expedienteRepo.findOne(id);
+        if(!item) throw new NotFoundException();
+        return item;
+    }
+
+    async findDoctor( doctor : UserEntity){
+        const item = await this.expedienteRepo.findOne(doctor);
         if(!item) throw new NotFoundException();
         return item;
     }
