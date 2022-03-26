@@ -18,4 +18,3 @@ export class AuthController {
     return this.authService.validateUser(body.email, body.password);
   }
 }
-

@@ -1,11 +1,12 @@
 import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
 
 import { UsersDto, UserResponseDto } from './dto/users.dto';
 import { UserEntity } from './users.entity';
 import { encodePassword } from '../utils/bcrypt';
+import { AuthService } from '../auth/auth.service';
 import { DoctorEntity } from '../doctor/doctor.entity';
 import { PatientEntity } from '../patient/patient.entity';
 
@@ -19,6 +20,8 @@ export class UsersService {
       private readonly doctorRepository: Repository<DoctorEntity>,
       @InjectRepository(PatientEntity)//Inyectas el repositorio que necesites y al cual le vas a pasar el id
       private readonly patientRepository: Repository<PatientEntity>,
+      @Inject(forwardRef(() => AuthService))
+      private authService: AuthService,
       private httpService: HttpService,
     ){}
 
@@ -63,11 +66,13 @@ export class UsersService {
           const newPatient = await this.patientRepository.create(patient);
           this.patientRepository.save(newPatient);
         }
+
+        const token = await this.authService.signToken(newUser);
   
         //TODO No regresar la contrasena al crear usuarios
         //const { password, ...response } = user;
   
-        return response;
+        return {token, response};
       }
 
       //En caso de que el email ya esxista

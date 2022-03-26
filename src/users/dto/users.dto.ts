@@ -1,4 +1,5 @@
 import { Contains, IsEmail, IsNotEmpty } from "class-validator";
+import { token, User } from "src/auth/dto/auth.dto";
 
 export class UsersDto {
     //TODO Averiguar pipes
@@ -55,13 +56,15 @@ export class UsersDto {
 
 export class UserResponseDto {
     //TODO Averiguar pipes
-    id?: string;
-    name: string;
-    userType: string;
-    fathersLastName: string;
-    mothersLastName: string;
-    email: string;
-    sex: string;
-    birthDate: Date;
-    phoneNumber: string;
+    token: token;
+    response: User;
+    // id?: string;
+    // name: string;
+    // userType: string;
+    // fathersLastName: string;
+    // mothersLastName: string;
+    // email: string;
+    // sex: string;
+    // birthDate: Date;
+    // phoneNumber: string;
 }

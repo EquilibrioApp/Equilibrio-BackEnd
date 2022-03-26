@@ -28,7 +28,7 @@ export class AuthService {
         const token = await this.signToken(result);
         console.log({...token, result});
         //TODO Hace falta reotrnar el objeto como se expresa en AuthresponseDto
-        return {...token, result};
+        return {token, result};
       }
       //Excepcion en caso de que la contrasena no sea correcta
       throw new UnauthorizedException();
