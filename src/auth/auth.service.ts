@@ -32,11 +32,11 @@ export class AuthService {
         return {token, result};
       }
       //Excepcion en caso de que la contrasena no sea correcta
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario o contrasena incorrectos');
     } 
     //Excepcion en caso de que el correo no sea encotrado en la BD
     catch (error) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario o contrasena incorrectos');
     }
   }
 

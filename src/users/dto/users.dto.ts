@@ -68,3 +68,10 @@ export class UserResponseDto {
     // birthDate: Date;
     // phoneNumber: string;
 }
+
+export class CheckCedula {
+    name: string;
+    fathersLastName: string;
+    mothersLastName: string;
+    cedula: string;
+}
