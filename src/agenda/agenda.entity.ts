@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, PrimaryColumn} from "typeorm";
 
 @Entity()
 export class AgendaEntity{
-    @PrimaryGeneratedColumn('uuid')//'uuid'
+    @PrimaryColumn()//'uuid'
+    // id_agenda = id_cita
     id_agenda: string;
     
     @Column({default:""})
@@ -21,13 +22,16 @@ export class AgendaEntity{
     end: Date;
 
     @Column({default:""})
-    attendees: string;
+    correoEspecialista: string;
+    
+    @Column({default:""})
+    correoPaciente: string;
 }
 /*
  id?: string;
   idPaciente: string;
   idEspecialista: string;
-  iCalUID : string;
+  iCalUID : string = mbsjh26n47g6gk3t83e5n2p78c@google.com;
   start: Date;
   end: Date;
   attendees: string*/
