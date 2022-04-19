@@ -20,10 +20,15 @@ export class EquivalenciaController {
         return this.equivalenciaService.findOne(id);
     }
 
+    // @Post()
+    // creteMera(@Param('doctor') doctor: UserEntity, @Body() body: Partial<EquivalenciaDto>): Promise<EquivalenciaDto> {
+    //     console.log(body);
+    //     return this.equivalenciaService.create(doctor, body);
+    // }
+
     @Post()
-    creteMera(@Param('doctor') doctor: UserEntity, @Body() body: Partial<EquivalenciaDto>): Promise<EquivalenciaDto> {
-        console.log(body);
-        return this.equivalenciaService.create(doctor, body);
+    creteMera(@Body() body: any): Promise<EquivalenciaEntity> {
+        return this.equivalenciaService.create(body);
     }
 
     @Put(':id') 

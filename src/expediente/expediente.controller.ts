@@ -6,7 +6,7 @@ import { ExpedienteDto } from './dto/expediente.dto';
 import { ExpedienteEntity } from './expediente.entity';
 import { ExpedienteService } from './expediente.service';
 
-@Controller(':doctor') ///+:expedientId/avance
+@Controller('/expediente') ///+:expedientId/avance
 export class ExpedienteController {
     constructor(
         private expedienteService:ExpedienteService,
@@ -20,26 +20,31 @@ export class ExpedienteController {
 
     @Get(':id') 
     findOne(@Param('id') id: string){
-        return this.expedienteService.findOne(id);
+        return this.expedienteService.pesos(id);
     }
 
     @Get() 
-    findDoctor(@Param('doctor') doctor: UserEntity){
-        return this.expedienteService.findDoctor(doctor);
+    findDoctor(){
+        return this.expedienteService.find();
     }
 
     @Post()
-    creteMera(@Param('doctor') doctor : UserEntity ,@Body() body: Partial<ExpedienteDto>): Promise<ExpedienteDto> { //TODO conexion con la relacion automatica ?
-        return this.expedienteService.create(doctor, body);
+    creteMera(@Body() body: any): Promise<ExpedienteEntity> {
+        return this.expedienteService.create(body);
     }
     
+    // @Post()
+    // creteMera(): Promise<ExpedienteDto> { //TODO conexion con la relacion automatica ?
+    //     return this.expedienteService.create(body);
+    // }
+
     @Put(':id') 
     update(@Param('id') id: string,@Body() body: any) {
         return this.expedienteService.update(id, body);
     }
 
-    @Delete(':id') //TODO borrar expediente 
-    delete(@Param('id_expediente') id: string) {
+    @Delete(':id')
+    delete(@Param('id') id: string) {
         return this.expedienteService.remove(id);
     }
 }

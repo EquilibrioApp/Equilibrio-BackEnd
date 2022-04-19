@@ -53,7 +53,6 @@ export class UsersDto {
 }
 
 export class UserResponseDto {
-    //TODO Averiguar pipes
     id?: string;
     name: string;
     userType: string;

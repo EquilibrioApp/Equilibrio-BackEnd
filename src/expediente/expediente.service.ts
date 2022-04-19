@@ -15,21 +15,28 @@ export class ExpedienteService {
         @InjectRepository(UserEntity)private readonly doctorRepo:Repository<UserEntity>,
     ){}
     
-    async create(doctor : UserEntity, exp: Partial<ExpedienteDto>): Promise<ExpedienteDto> {
-        const item = await this.doctorRepo.findOne(doctor);
-        if(item === undefined){
-            throw new NotFoundException;
-        }else {
-            const expediente = new ExpedienteEntity();
-            console.log(item);
-            expediente.doctor = doctor;
-            expediente.alturaPaciente = exp.alturaPaciente;
-            expediente.sexo = exp.sexo;
-            const expo =  await this.expedienteRepo.create(expediente);
-            this.expedienteRepo.save(expo)
-        }
-        return 
+    // async create(doctor : UserEntity, exp: Partial<ExpedienteDto>): Promise<ExpedienteDto> {
+    //     const item = await this.doctorRepo.findOne(doctor);
+    //     if(item === undefined){
+    //         throw new NotFoundException;
+    //     }else {
+    //         const expediente = new ExpedienteEntity();
+    //         console.log(item);
+    //         expediente.doctor = doctor;
+    //         expediente.alturaPaciente = exp.alturaPaciente;
+    //         expediente.sexo = exp.sexo;
+    //         const expo =  await this.expedienteRepo.create(expediente);
+    //         this.expedienteRepo.save(expo)
+    //     }
+    //     return 
+    // }
+
+    
+    async create(exp: Partial<ExpedienteEntity>): Promise<ExpedienteEntity> {
+        const item = this.expedienteRepo.create(exp);
+        return this.expedienteRepo.save(item);
     }
+
 
     async find(){
         return this.expedienteRepo.find();
@@ -55,6 +62,11 @@ export class ExpedienteService {
     async remove(id: string): Promise<ExpedienteEntity> {
         const item = await this.findOne(id);
         return this.expedienteRepo.remove(item);
+    }
+
+    async pesos(id : string){ 
+        const item = await this.findOne(id);
+        return item.avances.createdAt;
     }
     
     /*async createNewExpe(body:any) {

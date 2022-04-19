@@ -4,34 +4,41 @@ import { AvanceEntity } from './avances.entity';
 import { AvancesService } from './avances.service';
 import { AvancesDto } from './dto/avances.dto';
 
-@Controller(':expediente')
+@Controller(':expediente/avance')
 export class AvancesController {
     constructor(
         private avancesService:AvancesService,
     ){}
 
+    // @Get()
+    // findAll(){
+    //     return this.avancesService.find();
+    // }
+
     @Get()
-    findAll(){
-        return this.avancesService.find();
+    findExpediente(@Param('expediente') expediente : ExpedienteEntity){
+        console.log(expediente);
+        return this.avancesService.avancePeso(expediente);
     }
 
-    @Get(':id') //TODO mostrar datos de otras tablas
+    @Get(':id')
     findOne(@Param('id') id: string){
         return this.avancesService.findOne(id);
     }
 
     @Post()
     creteMera(@Param('expediente') expediente : ExpedienteEntity, @Body() body: AvancesDto): Promise<AvancesDto> {
+        console.log( body);
         return this.avancesService.create(expediente, body);
     }
 
-    @Put(':id') 
+    @Put('/:id') 
     creteAvance(@Param('id') id: string, @Body() body:any) {
         return this.avancesService.update(id, body);
     }
 
     @Delete(':id') 
     delete(@Param('id') id: string, expedienteId:string) {
-        return this.avancesService.remove(id, expedienteId);
+        return this.avancesService.remove(id);
     }
 } 

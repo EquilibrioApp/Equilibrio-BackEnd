@@ -42,11 +42,11 @@ export class UserEntity extends BaseEntity {
     @OneToMany(()=> ExpedienteEntity, equivalencia => equivalencia.doctor)
     equivalencia:ExpedienteEntity;
 
-    @OneToOne(()=> AgendaEntity, agendaDoctor => agendaDoctor.especialista)
-    agendaDoctor:AgendaEntity;
+    // @OneToOne(()=> AgendaEntity, agendaDoctor => agendaDoctor.especialista)
+    // agendaDoctor:AgendaEntity;
 
-    @OneToOne(()=> AgendaEntity, agendaPaciente => agendaPaciente.paciente)
-    agendaPaciente:AgendaEntity;
+    // @OneToOne(()=> AgendaEntity, agendaPaciente => agendaPaciente.paciente)
+    // agendaPaciente:AgendaEntity;
 
     toJSON(){
         return instanceToPlain(this);

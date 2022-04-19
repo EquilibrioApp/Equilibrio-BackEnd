@@ -5,7 +5,6 @@ import { PesoEntity } from "src/pesos/peso.entity";
 import { PlieguesEntity } from "src/pliegues/pliegues.entity";
 import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToMany, ManyToOne, BaseEntity, CreateDateColumn, UpdateDateColumn} from "typeorm";
 
- //TODO Actualizacion a CamelCase en DTO y Entidad
 @Entity()
 export class AvanceEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')//'uuid'

@@ -1,3 +1,4 @@
+import { AgendaEntity } from "src/agenda/agenda.entity";
 import { AvanceEntity } from "src/avances/avances.entity";
 import { DoctorEntity } from "src/doctor/doctor.entity";
 import { EjercicioEntity } from "src/ejercicio/ejercicio.entity";
@@ -17,6 +18,12 @@ export class ExpedienteEntity extends BaseEntity{
 
     @Column({default : ""})
     sexo: string;
+
+    @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+    birthDate: Date;
+
+    @Column({default: ''})
+    nombre: string;
     
     @CreateDateColumn()
     createdAt: Date;
@@ -35,6 +42,9 @@ export class ExpedienteEntity extends BaseEntity{
 
     @OneToOne(() => MetaEntity , meta => meta.expediente, {eager: true})
     meta: MetaEntity;
+
+    @OneToOne(() => AgendaEntity , agenda => agenda.expediente, {eager: true})
+    agenda: AgendaEntity;
 
     @OneToMany(()=> EjercicioEntity, ejercicio => ejercicio.expediente, {eager: true})
     ejercicio:EjercicioEntity;

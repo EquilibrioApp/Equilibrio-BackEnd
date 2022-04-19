@@ -5,12 +5,13 @@ import { Repository } from 'typeorm';
 import { RegistroEntity } from './registro.entity';
 
 @Injectable()
-export class RegistrosService {//TODO operaciones de la evaluación 
+export class RegistrosService {
     constructor(
         @InjectRepository(RegistroEntity)private readonly registroRepo:Repository<RegistroEntity>,
         @InjectRepository(ExpedienteEntity)private readonly expoRepo:Repository<ExpedienteEntity>,
     ){}
-    
+
+
     async create(exp: Partial<RegistroEntity>): Promise<RegistroEntity> {
         const item = await this.expoRepo.findOne(exp.id);
         if(item === undefined){

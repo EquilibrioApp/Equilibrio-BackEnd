@@ -18,7 +18,7 @@ export class AgendaService {
         return this.agendaRepo.findOne(id);
     }
     
-    createAgenda( agenda:AgendaDto):Promise<AgendaResponseDto>{
+    createAgenda( agenda:AgendaDto):Promise<AgendaDto>{
         const newAgenda = this.agendaRepo.create(agenda);
         console.log(newAgenda);
         return this.agendaRepo.save(newAgenda);

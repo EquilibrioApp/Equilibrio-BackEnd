@@ -17,7 +17,7 @@ export class AgendaController {
     }
 
     @Post('/create')
-    creteMera(@Body() agenda: AgendaDto): Promise<AgendaResponseDto>{
+    creteMera(@Body() agenda: AgendaDto): Promise<AgendaDto>{
         return this.agendaService.createAgenda(agenda);
     }
 

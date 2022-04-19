@@ -1,0 +1,11 @@
+{
+    "type": "postgresql",
+    "host": "ec2-34-231-63-30.compute-1.amazonaws.com",
+    "port": 3306,
+    "username": "guwazrnwnrsszq",
+    "password": "f99bdd4abeb42ea21af69364b1ed08f23d13bf64fa9bd820da763f62d1d7939c",
+    "database": "drjkf6p56ere6",
+    "entities": ["src/**/*.entity.ts"],
+    "migrations": ["src/database/migrations/*.ts"],
+    "migrationsTableName": "micrations"
+}

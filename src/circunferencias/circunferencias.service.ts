@@ -9,7 +9,7 @@ export class CircunferenciasService {
         @InjectRepository(CircunferenciaEntity)private readonly expedienteRepo:Repository<CircunferenciaEntity>,
     ){}
     
-    async create(exp: Partial<CircunferenciaEntity>): Promise<CircunferenciaEntity> {
+     async create(exp: Partial<CircunferenciaEntity>): Promise<CircunferenciaEntity> {
         const item = this.expedienteRepo.create(exp);
         return this.expedienteRepo.save(item);
     }
@@ -33,4 +33,5 @@ export class CircunferenciasService {
         const item = await this.findOne(id);
         return this.expedienteRepo.remove(item);
     }
+   
 }

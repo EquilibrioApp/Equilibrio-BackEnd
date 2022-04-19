@@ -14,17 +14,24 @@ export class EquivalenciaService {
         @InjectRepository(UserEntity)private readonly userRepo:Repository<UserEntity>,
     ){}
 
-    async create(doctor: UserEntity, exp: Partial<EquivalenciaDto>): Promise<EquivalenciaDto> {
-        const alimento = new EquivalenciaEntity();
-        alimento.nombre = exp.nombre;
-        alimento.grupoAlimencio = exp.grupoAlimencio;
-        alimento.subgrupo = exp.subgrupo;
-        alimento.racion = exp.racion ; 	
-        alimento.doctor = doctor;
-        console.log(alimento);
-        const item = this.equivalenciaRepo.create(alimento);
+    
+    async create(exp: Partial<EquivalenciaEntity>): Promise<EquivalenciaEntity> {
+        const item = this.equivalenciaRepo.create(exp);
         return this.equivalenciaRepo.save(item);
     }
+
+
+    // async create(doctor: UserEntity, exp: Partial<EquivalenciaDto>): Promise<EquivalenciaDto> {
+    //     const alimento = new EquivalenciaEntity();
+    //     alimento.nombre = exp.nombre;
+    //     alimento.grupoAlimencio = exp.grupoAlimencio;
+    //     alimento.subgrupo = exp.subgrupo;
+    //     alimento.racion = exp.racion ; 	
+    //     alimento.doctor = doctor;
+    //     console.log(alimento);
+    //     const item = this.equivalenciaRepo.create(alimento);
+    //     return this.equivalenciaRepo.save(item);
+    // }
 
     async find(){
         return this.equivalenciaRepo.find();

@@ -8,10 +8,11 @@ import { IndicesModule } from 'src/indices/indices.module';
 import { CircunferenciasModule } from 'src/circunferencias/circunferencias.module';
 import { PlieguesModule } from 'src/pliegues/pliegues.module';
 import { ExpedienteEntity } from 'src/expediente/expediente.entity';
+import { PesoEntity } from 'src/pesos/peso.entity';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([AvanceEntity, ExpedienteEntity]),
+    TypeOrmModule.forFeature([AvanceEntity, ExpedienteEntity, PesoEntity]),
     PesosModule, IndicesModule, 
     CircunferenciasModule, PlieguesModule,
   ],
