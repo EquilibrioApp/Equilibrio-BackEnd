@@ -11,15 +11,18 @@ export class AgendaService {
         @InjectRepository(AgendaEntity) private readonly  agendaRepo: Repository<AgendaEntity>
     ){}
 
-    findAll(){
-        return this.agendaRepo.find();
+    async findAll(idEspecialista:string): Promise<AgendaDto[]>{
+        console.log(idEspecialista);
+
+        const cita = await this.agendaRepo.find({where: [{idEspecialista: idEspecialista}]});
+        return cita
     }
 
     findOne(id_agenda:string){
         return this.agendaRepo.findOne(id_agenda);
     }
     
-    async createAgenda( agenda:AgendaDto):Promise<any>{
+    async createAgenda( agenda:AgendaDto):Promise<AgendaDto>{
         
         const template = {
             "summary": "Cita Equilibrio",

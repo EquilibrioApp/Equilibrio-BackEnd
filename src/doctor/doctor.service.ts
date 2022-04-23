@@ -15,8 +15,8 @@ export class DoctorService {
     private readonly doctorRepository: Repository<DoctorEntity>,
   ){}
 
-  async findPatients(id: string): Promise<PatientsResponseDto> {
-    return
+  async findPatients(idEspecialista: string): Promise<PatientsResponseDto> {
+    return 
   }
 
   async find(){

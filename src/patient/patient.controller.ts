@@ -11,8 +11,8 @@ export class PatientController {
   //   return this.patientService.createPatient(patient);
   // }
 
-  // @Get('/:nutri_codigo')
-  // getPatientsByDoctorsId(@Param('nutri_codigo') nutri_codigo: string): Promise<PatientDto[]>{
-  //   return this.patientService.getPatientByDoctorsId(nutri_codigo);
-  // }
+  @Get('/:nutriCodigo')
+  getPatientsByDoctorsId(@Param('nutriCodigo') nutriCodigo: string): Promise<PatientDto[]>{
+    return this.patientService.getPatientsByNutriCodigo(nutriCodigo);
+  }
 }

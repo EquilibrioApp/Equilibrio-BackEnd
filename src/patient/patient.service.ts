@@ -14,7 +14,7 @@ export class PatientService {
 
   //Obtiene todos los pacientes segun el nutriCodigo
   getPatientsByNutriCodigo(nutriCodigo: string): Promise<PatientDto[]>{
-    return this.patientRepository.find({nutriCodigo});
+    return 
   }
   //Obtiene un unico paciente mediante el id
   getPatients(userId: string): Promise<PatientDto>{
