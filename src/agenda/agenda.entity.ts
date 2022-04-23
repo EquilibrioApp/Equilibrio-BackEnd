@@ -3,12 +3,18 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, PrimaryCo
 
 @Entity()
 export class AgendaEntity{
-    @PrimaryColumn('uuid')//'uuid'
-    expedienteId: string;
+    @PrimaryColumn()//'uuid'
+    // id_agenda = id_cita
+    id_agenda: string;
+    
+    @Column({default:""})
+    idPaciente: string;
 
-    @OneToOne(() => ExpedienteEntity, expediente => expediente.agenda)
-    @JoinColumn()
-    expediente: ExpedienteEntity;
+    @Column({default:""})
+    idEspecialista: string;
+    // @OneToOne(() => ExpedienteEntity, expediente => expediente.agenda)
+    // @JoinColumn()
+    // expediente: ExpedienteEntity;
     
     @Column({default:""})
     iCalUID : string;
@@ -20,13 +26,16 @@ export class AgendaEntity{
     end: Date;
 
     @Column({default:""})
-    attendees: string;
+    correoEspecialista: string;
+    
+    @Column({default:""})
+    correoPaciente: string;
 }
 /*
  id?: string;
   idPaciente: string;
   idEspecialista: string;
-  iCalUID : string;
+  iCalUID : string = mbsjh26n47g6gk3t83e5n2p78c@google.com;
   start: Date;
   end: Date;
   attendees: string*/

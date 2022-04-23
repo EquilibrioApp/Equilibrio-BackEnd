@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { comparePassword } from '../utils/bcrypt';
@@ -8,6 +8,7 @@ import { AuthResponseDto, token, User } from './dto/auth.dto';
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject(forwardRef(() => UsersService))
     private usersService: UsersService,
     private jwtService: JwtService
     ) {}
@@ -28,14 +29,14 @@ export class AuthService {
         const token = await this.signToken(result);
         console.log({...token, result});
         //TODO Hace falta reotrnar el objeto como se expresa en AuthresponseDto
-        return {...token, result};
+        return {token, result};
       }
       //Excepcion en caso de que la contrasena no sea correcta
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario o contrasena incorrectos');
     } 
     //Excepcion en caso de que el correo no sea encotrado en la BD
     catch (error) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario o contrasena incorrectos');
     }
   }
 

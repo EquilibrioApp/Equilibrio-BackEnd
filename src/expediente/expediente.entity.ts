@@ -9,7 +9,10 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany
 
 @Entity()
 export class ExpedienteEntity extends BaseEntity{
-    @PrimaryGeneratedColumn('uuid')//'uuid'
+    // @PrimaryColumn()
+    // @Generated('uuid')
+    // id:string;
+    @PrimaryGeneratedColumn("uuid")//'uuid'
     id: string;
     
     @ManyToOne(()=> UserEntity, doctor => doctor.expediente, {eager: true})
@@ -43,8 +46,8 @@ export class ExpedienteEntity extends BaseEntity{
     @OneToOne(() => MetaEntity , meta => meta.expediente, {eager: true})
     meta: MetaEntity;
 
-    @OneToOne(() => AgendaEntity , agenda => agenda.expediente, {eager: true})
-    agenda: AgendaEntity;
+    // @OneToOne(() => AgendaEntity , agenda => agenda.expediente, {eager: true})
+    // agenda: AgendaEntity;
 
     @OneToMany(()=> EjercicioEntity, ejercicio => ejercicio.expediente, {eager: true})
     ejercicio:EjercicioEntity;

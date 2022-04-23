@@ -6,9 +6,9 @@ import { AgendaDto, AgendaResponseDto } from './dto/agenda.dto';
 export class AgendaController {
     constructor(private agendaService:AgendaService){}
 
-    @Get()
-    findAll() {
-        return this.agendaService.findAll();
+    @Get(':idEspecialista')
+    findAll(@Param('idEspecialista') idEspecialista: string):Promise<AgendaDto[]> {
+        return this.agendaService.findAll(idEspecialista);
     }
 
     @Get(':id')

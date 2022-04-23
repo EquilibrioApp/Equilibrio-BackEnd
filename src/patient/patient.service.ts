@@ -11,10 +11,14 @@ export class PatientService {
     @InjectRepository(PatientEntity)private readonly patientRepo:Repository<PatientEntity>  
   ) {}
 
-  async create(exp: Partial<PatientEntity>): Promise<PatientEntity> {
-    const item = this.patientRepo.create(exp);
-    return this.patientRepo.save(item);
+  //Obtiene todos los pacientes segun el nutriCodigo
+  getPatientsByNutriCodigo(nutriCodigo: string): Promise<PatientDto[]>{
+    return 
   }
+  //Obtiene un unico paciente mediante el id
+  // getPatients(userId: string): Promise<PatientDto>{
+  //   return this.patientRepo.findOne(userId);
+  // }
 
   //Obtiene todos los pacientes segun el nutriCodigo
   // getPatientsByNutriCodigo(nutriCodigo: string): Promise<PatientDto[]>{

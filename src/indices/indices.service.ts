@@ -106,6 +106,10 @@ export class IndicesService {
         const item = await this.findOne(id);
         return this.indiceRepo.remove(item);
     }
+
+
+    //TODO PESO ACTUAL Y PESO PERDIDO
+    //TODO ENTIDAD EJERCICIO
 }
 
 

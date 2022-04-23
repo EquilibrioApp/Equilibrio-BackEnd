@@ -1,4 +1,6 @@
 import { Contains, IsEmail, IsNotEmpty } from "class-validator";
+import { token, User } from "src/auth/dto/auth.dto";
+import { ExpedienteEntity } from "src/expediente/expediente.entity";
 
 export class UsersDto {
     //TODO Averiguar pipes
@@ -48,18 +50,28 @@ export class UsersDto {
 
     //Info en caso de ser paciente
 
-    nutriCodigo?: string;
+    nutriCodigo?: ExpedienteEntity;
     
 }
 
 export class UserResponseDto {
-    id?: string;
+    //TODO Averiguar pipes
+    token: token;
+    response: User;
+    // id?: string;
+    // name: string;
+    // userType: string;
+    // fathersLastName: string;
+    // mothersLastName: string;
+    // email: string;
+    // sex: string;
+    // birthDate: Date;
+    // phoneNumber: string;
+}
+
+export class CheckCedula {
     name: string;
-    userType: string;
     fathersLastName: string;
     mothersLastName: string;
-    email: string;
-    sex: string;
-    birthDate: Date;
-    phoneNumber: string;
+    cedula: string;
 }

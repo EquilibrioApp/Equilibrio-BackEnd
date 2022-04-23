@@ -7,13 +7,13 @@ import { PatientService } from './patient.service';
 export class PatientController {
   constructor(private patientService: PatientService) {}
 
-  @Post('/create')
-  cretePatient(@Body() patient: PatientEntity): Promise<PatientEntity> {
-    return this.patientService.create(patient);
-  }
-
-  // @Get('/:nutri_codigo')
-  // getPatientsByDoctorsId(@Param('nutri_codigo') nutri_codigo: string): Promise<PatientDto[]>{
-  //   return this.patientService.getPatientByDoctorsId(nutri_codigo);
+  // @Post('/create')
+  // cretePatient(@Body() patient: PatientEntity): Promise<PatientEntity> {
+  //   return this.patientService.create(patient);
   // }
+
+  @Get('/:nutriCodigo')
+  getPatientsByDoctorsId(@Param('nutriCodigo') nutriCodigo: string): Promise<PatientDto[]>{
+    return this.patientService.getPatientsByNutriCodigo(nutriCodigo);
+  }
 }

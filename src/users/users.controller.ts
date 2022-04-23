@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { UsersDto, UserResponseDto } from './dto/users.dto';
 import { UsersService } from './users.service';
 import  { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -18,11 +18,12 @@ export class UsersController {
       return this.usersService.findByEmail(email);
     }
 
-    @UseGuards(JwtAuthGuard)
-    @Get('/:id')//Buscar usuario mediante el Id
-    findById(@Param('id') id:string): Promise<UsersDto> {
-      return this.usersService.findById(id);
-    }
+    // @UseGuards(JwtAuthGuard)
+    // @HttpCode(HttpStatus.OK)
+    // @Get('/verify/token')//Buscar usuario mediante el Id
+    // checkToken(): Promise<UsersDto> {
+    //   return ;
+    // }
 }
 
 

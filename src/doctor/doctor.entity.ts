@@ -1,6 +1,7 @@
 import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import { UserEntity } from 'src/users/users.entity';
-import { Entity, BaseEntity, PrimaryColumn, OneToOne, JoinColumn, Column, OneToMany } from 'typeorm';
+import { instanceToPlain } from 'class-transformer';
+import { Entity, BaseEntity, PrimaryColumn, OneToOne, JoinColumn, Column } from 'typeorm';
 
 
 @Entity()
@@ -8,7 +9,7 @@ export class DoctorEntity extends BaseEntity {
     @PrimaryColumn()
     userId: string;
 
-    @OneToOne(()=> UserEntity, (user) => user.id)
+    @OneToOne(()=> UserEntity, (user) => user.id, {eager: true})
     @JoinColumn()
     user: UserEntity;
 
@@ -23,4 +24,8 @@ export class DoctorEntity extends BaseEntity {
 
     @Column({default: ''})
     postalCode: string;
+
+    toJSON(){
+        return instanceToPlain(this);
+    }
 }
