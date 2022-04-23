@@ -109,7 +109,7 @@ export class IndicesService {
 
 
     //TODO PESO ACTUAL Y PESO PERDIDO
-//TODO ENTIDAD EJERCICIO
+    //TODO ENTIDAD EJERCICIO
 }
 
 

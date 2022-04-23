@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
-import { AgendaDto, AgendaResponseDto } from './dto/agenda.dto';
+import { AgendaDto, AgendaResponseDto, GoogleDataDto, GoogleDataResponseDto } from './dto/agenda.dto';
 import { AgendaEntity } from './agenda.entity';
+import flaskApi from 'src/utils/flask';
 
 @Injectable()
 export class AgendaService {
@@ -10,18 +11,67 @@ export class AgendaService {
         @InjectRepository(AgendaEntity) private readonly  agendaRepo: Repository<AgendaEntity>
     ){}
 
-    findAll(){
-        return this.agendaRepo.find();
+    async findAll(idEspecialista:string): Promise<AgendaDto[]>{
+        console.log(idEspecialista);
+
+        const cita = await this.agendaRepo.find({where: [{idEspecialista: idEspecialista}]});
+        return cita
     }
 
     findOne(id_agenda:string){
         return this.agendaRepo.findOne(id_agenda);
     }
     
-    createAgenda( agenda:AgendaDto):Promise<AgendaResponseDto>{
-        const newAgenda = this.agendaRepo.create(agenda);
-        console.log(newAgenda);
-        return this.agendaRepo.save(newAgenda);
+    async createAgenda( agenda:AgendaDto):Promise<AgendaDto>{
+        
+        const template = {
+            "summary": "Cita Equilibrio",
+            "location": "",
+            "description": "",
+            "start": {
+              "dateTime": agenda.start,
+              "timeZone": "America/Mexico_City"
+            },
+            "end": {
+              "dateTime": agenda.end,
+              "timeZone": "America/Mexico_City"
+            },
+            "attendees": [{ "email": agenda.correoEspecialista}, { "email": agenda.correoPaciente}],
+            "reminders": {
+              "useDefault": false,
+              "overrides": [
+                { "method": "email", "minutes": 30 },
+                { "method": "popup", "minutes": 1 }
+              ]
+            }
+        }
+        
+
+        try {
+            const resp = await flaskApi.post<GoogleDataResponseDto>(
+                '/calendar/create',
+                 template
+              );
+
+              if (resp.status === 200) {
+                const date = new AgendaEntity();
+                date.idPaciente = agenda.idPaciente;
+                date.idEspecialista= agenda.idEspecialista;
+                date.start = agenda.start;
+                date.end = agenda.end;
+                date.correoEspecialista = agenda.correoEspecialista;
+                date.correoPaciente = agenda.correoPaciente;
+                date.id_agenda = resp.data.id;
+                date.iCalUID = resp.data.iCalUID;
+                const newDate = this.agendaRepo.create(date);
+                this.agendaRepo.save(newDate);
+                return newDate;
+              }
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
+        return ;
     }
 
     async updateAgenda( id_agenda:string, body: any){

@@ -18,7 +18,7 @@ import { UsersModule } from 'src/users/users.module';
     TypeOrmModule.forRoot({ 
       type: 'postgres',
       host: process.env.DB_HOST,
-      port: parseInt(<string>process.env.DB_PORT)||5433,
+      port: parseInt(<string>process.env.DB_PORT)/* ||5433 */,
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
@@ -26,7 +26,7 @@ import { UsersModule } from 'src/users/users.module';
       synchronize: true,
       retryDelay: 3000,
       retryAttempts: 5,
-      // dropSchema: true
+    // dropSchema: true
     }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule,
         PatientModule, DoctorModule, AuthModule, UsersModule
   
