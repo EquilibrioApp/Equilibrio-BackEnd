@@ -28,10 +28,14 @@ export class DoctorService {
 
     
     const expedients = await this.expedienteRepo.find({where: [{doctor: idEspecialista}]});
-    console.log(expedients);
+
+    const expedientsIds = [];
+    expedients.forEach(expedients => expedientsIds.push(expedients.id));
+
+    const patient = await this.patientRepo.find({where: [{nutriCodigo: expedientsIds}]});
     
 
-    return 
+    return patient;
   }
 
   async find(){
