@@ -6,6 +6,9 @@ import { DoctorEntity } from './doctor.entity';
 import { DoctorPCResponseDto, PatientsResponseDto } from './dto/doctor.dto';
 import { PatientService } from '../patient/patient.service';
 import { PotentialUserResponseDto } from './dto/potential-users.dto';
+import { ExpedienteEntity } from '../expediente/expediente.entity';
+import { UserEntity } from '../users/users.entity';
+import { PatientEntity } from '../patient/patient.entity';
 
 @Injectable()
 export class DoctorService {
@@ -13,9 +16,21 @@ export class DoctorService {
     //Repositorios
     @InjectRepository(DoctorEntity)
     private readonly doctorRepository: Repository<DoctorEntity>,
+    @InjectRepository(ExpedienteEntity)
+    private readonly expedienteRepo:Repository<ExpedienteEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepo:Repository<UserEntity>,
+    @InjectRepository(PatientEntity)
+    private readonly patientRepo:Repository<PatientEntity>
   ){}
 
-  async findPatients(idEspecialista: string): Promise<PatientsResponseDto> {
+  async findPatients(idEspecialista: string)/* : Promise<PatientsResponseDto> */ {
+
+    
+    const expedients = await this.expedienteRepo.find({where: [{doctor: idEspecialista}]});
+    console.log(expedients);
+    
+
     return 
   }
 
@@ -24,9 +39,9 @@ export class DoctorService {
   }
 
   async findOne( id : string){
-      const item = await this.doctorRepository.findOne(id);
-      if(!item) throw new NotFoundException();
-      return item;
+    const item = await this.doctorRepository.findOne(id);
+    if(!item) throw new NotFoundException();
+    return item;
   }
 
   async findAlldoctorsByPc(postalCode: string): Promise<DoctorPCResponseDto[]> {

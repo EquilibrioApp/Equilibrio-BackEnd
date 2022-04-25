@@ -12,4 +12,9 @@ export class DoctorController {
      findAlldoctorsByPC(@Param('cp') cp: string){
          return this.doctorService.findAlldoctorsByPc(cp);
      }
+
+    @Get('/:idEspecialista/pacientes')
+     findPatients(@Param('idEspecialista') idEspecialista: string){
+         return this.doctorService.findPatients(idEspecialista);
+     }
 }

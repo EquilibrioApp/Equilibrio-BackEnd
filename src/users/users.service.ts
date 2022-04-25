@@ -79,7 +79,7 @@ export class UsersService {
         this.doctorRepository.save(newDoctor);
       } else {
         const patient = new PatientEntity();
-        patient.nutriCodigo = user.nutriCodigo;
+        patient.nutriCodigo = user.nutriCodigoId;
         patient.user = response;
 
         const newPatient = await this.patientRepository.create(patient);
