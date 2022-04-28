@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -24,18 +24,20 @@ export class DoctorService {
     private readonly patientRepo:Repository<PatientEntity>
   ){}
 
-  async findPatients(idEspecialista: string)/* : Promise<PatientsResponseDto> */ {
+  async findPatients(idEspecialista: string): Promise<PatientsResponseDto[]> {
 
     
     const expedients = await this.expedienteRepo.find({where: [{doctor: idEspecialista}]});
-
     const expedientsIds = [];
     expedients.forEach(expedients => expedientsIds.push(expedients.id));
-
-    const patient = await this.patientRepo.find({where: [{nutriCodigo: expedientsIds}]});
     
+    const patients = await this.patientRepo.find({nutriCodigo: In(expedientsIds)});
+    const patientsIds = [];
+    patients.forEach(patients => patientsIds.push(patients.userId));
+    
+    const users = await this.userRepo.find({id: In(patientsIds)});
 
-    return patient;
+    return users;
   }
 
   async find(){

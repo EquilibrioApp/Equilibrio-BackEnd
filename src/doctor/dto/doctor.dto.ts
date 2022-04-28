@@ -1,6 +1,15 @@
-export class PatientsResponseDto { 
-    userId: string;
+export class PatientsResponseDto {
+    id:              string;
+    name:            string;
+    userType:        string;
+    fathersLastName: string;
+    mothersLastName: string;
+    email:           string;
+    sex:             string;
+    birthDate:       Date;
+    phoneNumber:     string;
 }
+
 
 export class DoctorPCResponseDto {
     userId:      string;
