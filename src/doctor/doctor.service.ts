@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -6,6 +6,9 @@ import { DoctorEntity } from './doctor.entity';
 import { DoctorPCResponseDto, PatientsResponseDto } from './dto/doctor.dto';
 import { PatientService } from '../patient/patient.service';
 import { PotentialUserResponseDto } from './dto/potential-users.dto';
+import { ExpedienteEntity } from '../expediente/expediente.entity';
+import { UserEntity } from '../users/users.entity';
+import { PatientEntity } from '../patient/patient.entity';
 
 @Injectable()
 export class DoctorService {
@@ -13,10 +16,28 @@ export class DoctorService {
     //Repositorios
     @InjectRepository(DoctorEntity)
     private readonly doctorRepository: Repository<DoctorEntity>,
+    @InjectRepository(ExpedienteEntity)
+    private readonly expedienteRepo:Repository<ExpedienteEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepo:Repository<UserEntity>,
+    @InjectRepository(PatientEntity)
+    private readonly patientRepo:Repository<PatientEntity>
   ){}
 
-  async findPatients(idEspecialista: string): Promise<PatientsResponseDto> {
-    return 
+  async findPatients(idEspecialista: string): Promise<PatientsResponseDto[]> {
+
+    
+    const expedients = await this.expedienteRepo.find({where: [{doctor: idEspecialista}]});
+    const expedientsIds = [];
+    expedients.forEach(expedients => expedientsIds.push(expedients.id));
+    
+    const patients = await this.patientRepo.find({nutriCodigo: In(expedientsIds)});
+    const patientsIds = [];
+    patients.forEach(patients => patientsIds.push(patients.userId));
+    
+    const users = await this.userRepo.find({id: In(patientsIds)});
+
+    return users;
   }
 
   async find(){
@@ -24,9 +45,9 @@ export class DoctorService {
   }
 
   async findOne( id : string){
-      const item = await this.doctorRepository.findOne(id);
-      if(!item) throw new NotFoundException();
-      return item;
+    const item = await this.doctorRepository.findOne(id);
+    if(!item) throw new NotFoundException();
+    return item;
   }
 
   async findAlldoctorsByPc(postalCode: string): Promise<DoctorPCResponseDto[]> {

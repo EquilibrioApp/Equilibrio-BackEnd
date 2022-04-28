@@ -33,3 +33,7 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+#Propios
+src/agenda/googleResponse.json
+src/agenda/googleResponse1.json

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AgendaService } from './agenda.service';
-import { AgendaDto, AgendaResponseDto } from './dto/agenda.dto';
+import { AgendaDto, AgendaResponseDto, CitasDto } from './dto/agenda.dto';
 
 @Controller('agenda')
 export class AgendaController {
@@ -11,8 +11,8 @@ export class AgendaController {
         return this.agendaService.findAll(idEspecialista);
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
+    @Get('/cita/:id')
+    findOne(@Param('id') id: string) /* :Promise<CitasDto> */{
         return this.agendaService.findOne(id);
     }
 

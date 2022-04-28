@@ -1,25 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
-import { AgendaDto, AgendaResponseDto, GoogleDataDto, GoogleDataResponseDto } from './dto/agenda.dto';
+import { AgendaDto, AgendaResponseDto, CitasDto, GoogleDataDto, GoogleDataResponseDto } from './dto/agenda.dto';
 import { AgendaEntity } from './agenda.entity';
 import flaskApi from 'src/utils/flask';
+import { UserEntity } from '../users/users.entity';
 
 @Injectable()
 export class AgendaService {
     constructor(
-        @InjectRepository(AgendaEntity) private readonly  agendaRepo: Repository<AgendaEntity>
+        @InjectRepository(AgendaEntity) 
+        private readonly  agendaRepo: Repository<AgendaEntity>,
+        @InjectRepository(UserEntity) 
+        private readonly  userRepo: Repository<AgendaEntity>
     ){}
 
     async findAll(idEspecialista:string): Promise<AgendaDto[]>{
         console.log(idEspecialista);
-
+        
         const cita = await this.agendaRepo.find({where: [{idEspecialista: idEspecialista}]});
-        return cita
+        
+        return cita;
+        
     }
 
-    findOne(id:string){
-        return this.agendaRepo.findOne(id);
+    async findOne(id:string)/* : Promise<CitasDto> */{
+      const cita = await this.agendaRepo.findOne(id);
+      const datosPaciente = await this.userRepo.findOne(cita.idPaciente);
+
+
+      return [{...cita,  ...datosPaciente}];
     }
     
     async createAgenda( agenda:AgendaDto):Promise<AgendaDto>{
@@ -84,4 +94,6 @@ export class AgendaService {
         await this.agendaRepo.delete(id);
         return true;
     }
+
+
 }
