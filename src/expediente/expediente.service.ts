@@ -33,7 +33,9 @@ export class ExpedienteService {
 
     
     async create(exp: Partial<ExpedienteEntity>): Promise<ExpedienteEntity> {
+        console.log(exp);
         const item = this.expedienteRepo.create(exp);
+        console.log(item.doctor);
         return this.expedienteRepo.save(item);
     }
 

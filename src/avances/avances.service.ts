@@ -68,5 +68,12 @@ export class AvancesService {
         const item = await this.findOne(id);
         return this.avanceRepo.remove(item);
     }
-
+    
+    // Mostrar avances de un expediente en especifico.
+    async findAvancesExpediente( expediente : ExpedienteEntity){
+        const item = await this.avanceRepo.find({where: [{id: expediente}]});
+        return item;
+    }
+    
+    
 }

@@ -14,11 +14,12 @@ export class AvancesController {
     // findAll(){
     //     return this.avancesService.find();
     // }
+   
 
     @Get()
     findExpediente(@Param('expediente') expediente : ExpedienteEntity){
         console.log(expediente);
-        return this.avancesService.findExpediente(expediente);
+        return this.avancesService.findAvancesExpediente(expediente);
     }
 
     @Get(':id')
