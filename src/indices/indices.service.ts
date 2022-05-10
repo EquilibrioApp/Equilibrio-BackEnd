@@ -29,6 +29,7 @@ export class IndicesService {
     }
 
     async create( body:any): Promise<IndiceEntity> {
+        console.log(body);
         const indice = new IndiceEntity();
         indice.masaCorporal = this.createIMC(body.peso, body.altura); // IMC=PESO/(ALTURAxAlTURA)
         indice.masaGrasa = this.createMg(body, body.cintura, body.cuello, body.cadera, body.altura, body.sexo, body.edad, body.peso); // Fórmula Masa Grasa 
@@ -37,8 +38,10 @@ export class IndicesService {
         indice.masaResidual = this.createMr(body.peso, body.sexo); // Masa residual
         // Masa muscular (kg)=peso-(masa grasa + masa ósea + masa residual)
         indice.masaMuscular = (body.peso - (indice.masaGrasa + indice.masaOsea + indice.masaResidual));
+        indice.avanceId = body.avanceId;
 
         const item = this.indiceRepo.create(indice);
+        console.log(item);
         return this.indiceRepo.save(item);
     }
 

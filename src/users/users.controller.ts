@@ -13,9 +13,9 @@ export class UsersController {
       return this.usersService.create(body);
     }
 
-    @Get('/:email')//Login mediante el email
-    loginByEmail(@Param('email') email:string): Promise<UsersDto> {
-      return this.usersService.findByEmail(email);
+    @Get('/profile/:id')//Login mediante el id
+    loginByid(@Param('id') id:string): Promise<UsersDto> {
+      return this.usersService.findById(id);
     }
 
     // @UseGuards(JwtAuthGuard)
