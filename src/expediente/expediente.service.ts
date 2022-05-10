@@ -38,7 +38,7 @@ export class ExpedienteService {
     }
 
 
-    async find(){
+    async find(): Promise<ExpedienteResponseDto[]> { 
         return this.expedienteRepo.find();
     }
 
@@ -48,11 +48,11 @@ export class ExpedienteService {
         return item;
     }
 
-    async findDoctor( doctor : UserEntity){
-        const item = await this.expedienteRepo.findOne(doctor);
-        if(!item) throw new NotFoundException();
-        return item;
-    }
+    // async findDoctor( doctor : UserEntity): Promise<ExpedienteResponseDto[]> { 
+    //     const item = await this.expedienteRepo.findOne(doctor);
+    //     if(!item) throw new NotFoundException();
+    //     return item;
+    // }
 
     async update(id: string, exp: Partial<ExpedienteEntity>): Promise<ExpedienteEntity> {
         const item = await this.findOne(id);

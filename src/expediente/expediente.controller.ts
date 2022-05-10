@@ -13,20 +13,20 @@ export class ExpedienteController {
         private metasService:MetasService,
     ){}
 
-    // @Get()
-    // findAll(){
-    //     return this.expedienteService.find();
-    // }
+    @Get()
+    findAll(){
+        return this.expedienteService.find();
+    }
 
     @Get(':id') 
     findOne(@Param('id') id: string){
         return this.expedienteService.pesos(id);
     }
 
-    @Get() 
-    findDoctor(){
-        return this.expedienteService.find();
-    }
+    // @Get() 
+    // findDoctor(){
+    //     return this.expedienteService.findDoctor();
+    // }
 
     @Post()
     creteMera(@Body() body: any): Promise<ExpedienteEntity> {

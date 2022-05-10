@@ -16,7 +16,13 @@ export class ExpedienteDto {
 
 //Respuesta al crear expediente
 export class ExpedienteResponseDto{
-  expediente: string;
+    id: string;
+    doctor:UserEntity;
+    sexo: string;
+    birthDate: Date;
+    nombre: string;
+    createdAt: Date;
+    alturaPaciente: number;
 }
 
 /*create table expediente (

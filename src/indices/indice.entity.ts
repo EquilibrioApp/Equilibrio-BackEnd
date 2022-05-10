@@ -4,10 +4,10 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, BaseEntit
 
 @Entity()
 export class IndiceEntity extends BaseEntity{
-    @PrimaryGeneratedColumn('uuid')//'uuid'
-    id: string;
+    // @PrimaryGeneratedColumn('uuid')//'uuid'
+    // id: string;
 
-    @PrimaryColumn()
+    @PrimaryColumn( )
     avanceId: string;
 
     @OneToOne(() => AvanceEntity, avance => avance.indice) 

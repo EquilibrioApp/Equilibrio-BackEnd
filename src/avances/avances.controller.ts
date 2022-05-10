@@ -18,7 +18,7 @@ export class AvancesController {
     @Get()
     findExpediente(@Param('expediente') expediente : ExpedienteEntity){
         console.log(expediente);
-        return this.avancesService.avancePeso(expediente);
+        return this.avancesService.findExpediente(expediente);
     }
 
     @Get(':id')
