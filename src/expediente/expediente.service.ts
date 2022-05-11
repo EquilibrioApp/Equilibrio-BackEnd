@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/dto/auth.dto';
 import { AvancesService } from 'src/avances/avances.service';
 import { UserEntity } from 'src/users/users.entity';
+import flaskApi from 'src/utils/flask';
 import { Repository } from 'typeorm';
-import { ExpedienteDto, ExpedienteResponseDto } from './dto/expediente.dto';
+import { ExpedienteDto, ExpedienteResponseDto, mealRequest, MealsResponseDto } from './dto/expediente.dto';
 import { ExpedienteEntity } from './expediente.entity';
 
 
@@ -69,6 +70,21 @@ export class ExpedienteService {
     async pesos(id : string){ 
         const item = await this.findOne(id);
         return item.avances.createdAt;
+    }
+
+    async getMeals(buscarRecetas : mealRequest){ 
+
+        try {
+            const resp = await flaskApi.get<MealsResponseDto[]>(
+                '/api/recetas/consulta', {params: buscarRecetas}
+              );
+
+              return resp.data;
+        } catch (error) {
+            console.log(error);
+        }
+
+        
     }
     
     /*async createNewExpe(body:any) {
