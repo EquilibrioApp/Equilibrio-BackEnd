@@ -38,11 +38,7 @@ export class IndicesService {
         indice.masaResidual = this.createMr(body.peso, body.sexo); // Masa residual
         // Masa muscular (kg)=peso-(masa grasa + masa ósea + masa residual)
         indice.masaMuscular = (body.peso - (indice.masaGrasa + indice.masaOsea + indice.masaResidual));
-<<<<<<< HEAD
-        indice.avanceId = body.avanceId
-=======
         indice.avanceId = body.avanceId;
->>>>>>> d89c177dfcd68408348f50319c746b70c9783b45
 
         const item = this.indiceRepo.create(indice);
         console.log(item);
