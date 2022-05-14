@@ -2,7 +2,7 @@ import { Post , Body, Get, Param, Delete, Put} from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { MetasService } from 'src/metas/metas.service';
 import { UserEntity } from 'src/users/users.entity';
-import { ExpedienteDto, mealRequest } from './dto/expediente.dto';
+import { ExpedienteDto, ExpedientesResponseDto, mealRequest } from './dto/expediente.dto';
 import { ExpedienteEntity } from './expediente.entity';
 import { ExpedienteService } from './expediente.service';
 
@@ -23,10 +23,15 @@ export class ExpedienteController {
         return this.expedienteService.pesos(id);
     }
 
-    // @Get() 
-    // findDoctor(){
-    //     return this.expedienteService.find();
-    // }
+    @Get('/pacientes/:idEspecialista') 
+    findDoctorsExpedients(@Param('idEspecialista') idEspecialista: string){
+        return this.expedienteService.doctorsExpedients(idEspecialista);
+    }
+
+    @Get() 
+    findDoctor(){
+        return this.expedienteService.find();
+    }
 
     @Post()
     creteMera(@Body() body: any): Promise<ExpedienteEntity> {

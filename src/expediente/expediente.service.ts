@@ -5,7 +5,7 @@ import { AvancesService } from 'src/avances/avances.service';
 import { UserEntity } from 'src/users/users.entity';
 import flaskApi from 'src/utils/flask';
 import { Repository } from 'typeorm';
-import { ExpedienteDto, ExpedienteResponseDto, mealRequest, MealsResponseDto } from './dto/expediente.dto';
+import { ExpedienteDto, ExpedienteResponseDto, ExpedientesResponseDto, mealRequest, MealsResponseDto } from './dto/expediente.dto';
 import { ExpedienteEntity } from './expediente.entity';
 
 
@@ -43,6 +43,13 @@ export class ExpedienteService {
 
     async find(): Promise<ExpedienteResponseDto[]> { 
         return this.expedienteRepo.find();
+    }
+
+    async doctorsExpedients(idEspecialista: string){
+
+        const response = await this.expedienteRepo.find({where: [{doctor: idEspecialista}]});
+
+        return response;
     }
 
     async findOne( id : string){
