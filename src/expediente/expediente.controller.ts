@@ -48,6 +48,12 @@ export class ExpedienteController {
         return this.expedienteService.remove(id);
     }
 
+    // @Get('/meals/recipes/:buscarRecetas') 
+    // getMeals(@Param('buscarRecetas') buscarRecetas: mealRequest) {
+    //     console.log('Body: ' + buscarRecetas);
+    //     return this.expedienteService.getMeals(buscarRecetas);
+    // }
+
     @Get('/meals/recipes') 
     getMeals(@Body() buscarRecetas: mealRequest) {
         console.log('Body: ' + buscarRecetas);
