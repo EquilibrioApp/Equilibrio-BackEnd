@@ -20,7 +20,7 @@ export class ExpedienteController {
 
     @Get(':id') 
     findOne(@Param('id') id: string){
-        return this.expedienteService.pesos(id);
+        return this.expedienteService.findOne(id);
     }
 
     @Get('/pacientes/:idEspecialista') 
