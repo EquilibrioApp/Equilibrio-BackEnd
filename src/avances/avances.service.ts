@@ -60,7 +60,10 @@ export class AvancesService {
     
     // Mostrar avances de un expediente en especifico.
     async findAvancesExpediente( expediente : ExpedienteEntity){
-        const item = await this.avanceRepo.find({where: [{expediente: expediente}]});
+        const item = await this.avanceRepo.find({
+            where: [{expediente: expediente}],
+            order: {createdAt: "DESC"}
+        });
         console.log(item);
         return item;
     }
