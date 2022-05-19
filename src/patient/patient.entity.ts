@@ -5,7 +5,7 @@ import { ExpedienteEntity } from "src/expediente/expediente.entity";
 
 @Entity()
 export class PatientEntity extends BaseEntity{
-    @PrimaryColumn()//
+    @PrimaryColumn("uuid")//
     userId: string;
 
     @OneToOne(()=> UserEntity, (user) => user.id)

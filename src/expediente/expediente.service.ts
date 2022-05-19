@@ -79,19 +79,19 @@ export class ExpedienteService {
         return item.avances.createdAt;
     }
 
-    async getMeals(buscarRecetas : mealRequest){ 
+    async getMeals(buscarRecetas : string){ 
+
+        console.log('Ya en el servicio antes de invocar la API: ' + buscarRecetas);
 
         try {
             const resp = await flaskApi.get<MealsResponseDto[]>(
-                '/api/recetas/consulta', {params: buscarRecetas}
+                '/api/recetas/consulta?buscarRecetas='+buscarRecetas
               );
-
+              console.log(resp.data);
               return resp.data;
         } catch (error) {
             console.log(error);
         }
-
-        
     }
     
     

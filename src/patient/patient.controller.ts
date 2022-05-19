@@ -12,6 +12,11 @@ export class PatientController {
   //   return this.patientService.create(patient);
   // }
 
+  @Get('/:idUsuario')
+  getPatientsByUserId(@Param('idUsuario') idUsuario: string): Promise<PatientEntity>{
+    return this.patientService.getPatientsByUserId(idUsuario);
+  }
+
   @Get('/:nutriCodigo')
   getPatientsByDoctorsId(@Param('nutriCodigo') nutriCodigo: string): Promise<PatientDto[]>{
     return this.patientService.getPatientsByNutriCodigo(nutriCodigo);
