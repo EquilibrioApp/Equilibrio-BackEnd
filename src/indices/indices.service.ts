@@ -98,8 +98,6 @@ export class IndicesService {
             return mr;
         }
 
-
-
     async update(id: string, exp: Partial<IndiceEntity>): Promise<IndiceEntity> {
         const item = await this.findOne(id);
         return this.indiceRepo.save({...item, ...exp});

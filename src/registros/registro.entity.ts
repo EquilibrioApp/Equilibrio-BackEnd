@@ -32,20 +32,20 @@ export class RegistroEntity extends BaseEntity{
     questionSix: boolean;
 
     @Column() 
-    questionSeven: number;
+    questionSeven: boolean;
     
     @Column() 
-    questionEight: number;
+    questionEight: boolean;
 
     @Column() 
-    questionNine: number;
+    questionNine: boolean;
 
     @Column() 
-    questionTen: number;
+    questionTen: boolean;
 
     @Column() 
-    questionEleven: number;
+    questionEleven: boolean;
 
     @Column() 
-    questionTwelve: number;
+    questionTwelve: boolean;
 }

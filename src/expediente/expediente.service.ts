@@ -41,7 +41,7 @@ export class ExpedienteService {
     }
 
 
-    async find(){
+    async find(): Promise<ExpedienteResponseDto[]> { 
         return this.expedienteRepo.find();
     }
 
@@ -58,11 +58,11 @@ export class ExpedienteService {
         return item;
     }
 
-    async findDoctor( doctor : UserEntity){
-        const item = await this.expedienteRepo.findOne(doctor);
-        if(!item) throw new NotFoundException();
-        return item;
-    }
+    // async findDoctor( doctor : UserEntity): Promise<ExpedienteResponseDto[]> { 
+    //     const item = await this.expedienteRepo.findOne(doctor);
+    //     if(!item) throw new NotFoundException();
+    //     return item;
+    // }
 
     async update(id: string, exp: Partial<ExpedienteEntity>): Promise<ExpedienteEntity> {
         const item = await this.findOne(id);
@@ -79,20 +79,21 @@ export class ExpedienteService {
         return item.avances.createdAt;
     }
 
-    async getMeals(buscarRecetas : mealRequest){ 
+    async getMeals(buscarRecetas : string){ 
+
+        console.log('Ya en el servicio antes de invocar la API: ' + buscarRecetas);
 
         try {
             const resp = await flaskApi.get<MealsResponseDto[]>(
-                '/api/recetas/consulta', {params: buscarRecetas}
+                '/api/recetas/consulta?buscarRecetas='+buscarRecetas
               );
-
+              console.log(resp.data);
               return resp.data;
         } catch (error) {
             console.log(error);
         }
-
-        
     }
+    
     
     /*async createNewExpe(body:any) {
         //Meta

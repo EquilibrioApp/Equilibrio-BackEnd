@@ -13,10 +13,10 @@ export class ExpedienteController {
         private metasService:MetasService,
     ){}
 
-    // @Get()
-    // findAll(){
-    //     return this.expedienteService.find();
-    // }
+    @Get()
+    findAll(){
+        return this.expedienteService.find();
+    }
 
     @Get(':id') 
     findOne(@Param('id') id: string){
@@ -53,8 +53,14 @@ export class ExpedienteController {
         return this.expedienteService.remove(id);
     }
 
-    @Get('/meals/recipes') 
-    getMeals(@Body() buscarRecetas: mealRequest) {
+    // @Get('/meals/recipes/:buscarRecetas') 
+    // getMeals(@Param('buscarRecetas') buscarRecetas: mealRequest) {
+    //     console.log('Body: ' + buscarRecetas);
+    //     return this.expedienteService.getMeals(buscarRecetas);
+    // }
+
+    @Get('/meals/recipes/:buscarRecetas') 
+    getMeals(@Param('buscarRecetas') buscarRecetas:string) {//@Body() buscarRecetas: mealRequest
         console.log('Body: ' + buscarRecetas);
         return this.expedienteService.getMeals(buscarRecetas);
     }

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import { PesoEntity } from 'src/pesos/peso.entity';
-import {  Repository  }  from  'typeorm' ;
+import {  createQueryBuilder, Repository, SelectQueryBuilder  }  from  'typeorm' ;
 import { AvanceEntity } from './avances.entity';
 import { AvancesDto } from './dto/avances.dto';
 
@@ -28,13 +28,24 @@ export class AvancesService {
         console.log(expediente);
         const item = await this.findExpediente(expediente);
         console.log(item);
-        return 
+        return item
     }
+    
     async findExpediente( expediente : ExpedienteEntity){
+        // const item = await createQueryBuilder("avances")
+        //             .leftJoinAndSelect("expediente.avances", "expediente")
+        //             .where("expediente.id =: id", {id: expediente})
+        //             .getOne()
         const item = await this.avanceRepo.findOne(expediente);
         if(!item) throw new NotFoundException();
         return item;
     }
+
+    // async findExpediente( expediente : ExpedienteEntity){
+    //     const item = await this.avanceRepo.findOne(expediente);
+    //     if(!item) throw new NotFoundException();
+    //     return item;
+    // }
     
     async create(expediente:ExpedienteEntity, exp: Partial<AvancesDto>): Promise<AvancesDto> {
         // const item = this.avanceEntity.create(exp);

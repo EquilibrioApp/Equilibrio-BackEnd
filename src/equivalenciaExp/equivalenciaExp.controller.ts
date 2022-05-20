@@ -1,13 +1,13 @@
 import { Controller, Get, Delete, Post, Put, Param, Body } from '@nestjs/common';
 import { UserEntity } from 'src/users/users.entity';
 import { EquivalenciaDto } from './dto/equivalencias.dto';
-import { EquivalenciaEntity } from './equivalencia.entity';
-import { EquivalenciaService } from './equivalencia.service';
+import { EquivalenciaExpEntity } from './equivalenciaExp.entity';
+import { EquivalenciaExpService } from './equivalenciaExp.service';
 
-@Controller('/equivalencia')
-export class EquivalenciaController {
+@Controller('/expediente/equivalencia')
+export class EquivalenciaExpController {
     constructor(
-        private equivalenciaService:EquivalenciaService,
+        private equivalenciaService:EquivalenciaExpService,
     ){}
 
     @Get()
@@ -27,7 +27,7 @@ export class EquivalenciaController {
     // }
 
     @Post()
-    creteMera(@Body() body: any): Promise<EquivalenciaEntity> {
+    creteMera(@Body() body: any): Promise<EquivalenciaExpEntity> {
         return this.equivalenciaService.create(body);
     }
 

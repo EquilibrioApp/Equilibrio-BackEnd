@@ -13,7 +13,7 @@ import { PatientModule } from 'src/patient/patient.module';
 import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 
 @Module({
-  imports: [HttpModule, forwardRef(() => AuthModule), TypeOrmModule.forFeature([UserEntity, DoctorEntity, PatientEntity]),],
+  imports: [HttpModule, forwardRef(() => AuthModule), TypeOrmModule.forFeature([UserEntity, DoctorEntity, PatientEntity, ExpedienteEntity]),],
   providers: [UsersService],
   exports: [UsersService],
   controllers: [UsersController]

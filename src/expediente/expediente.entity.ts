@@ -51,6 +51,9 @@ export class ExpedienteEntity extends BaseEntity{
 
     @OneToMany(()=> EjercicioEntity, ejercicio => ejercicio.expediente, {eager: true})
     ejercicio:EjercicioEntity;
+
+    @OneToMany(()=> EjercicioEntity, equivalencia => equivalencia.expediente, {eager: true})
+    equivalencia:EjercicioEntity;
 }
 
 /*create table expediente (

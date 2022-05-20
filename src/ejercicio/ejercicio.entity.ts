@@ -18,4 +18,7 @@ export class EjercicioEntity extends BaseEntity {
 
     @Column()
     exercises:string;
+    
+    @Column()
+    time:number;    
 }

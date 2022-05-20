@@ -10,6 +10,11 @@ export class PatientService {
   constructor(
     @InjectRepository(PatientEntity)private readonly patientRepo:Repository<PatientEntity>  
   ) {}
+    
+
+  getPatientsByUserId(idUsuario: string): Promise<PatientEntity>{
+    return this.patientRepo.findOne(idUsuario);
+  }
 
   //Obtiene todos los pacientes segun el nutriCodigo
   getPatientsByNutriCodigo(nutriCodigo: string): Promise<PatientDto[]>{

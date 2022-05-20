@@ -7,7 +7,7 @@ export class IndiceEntity extends BaseEntity{
     // @PrimaryGeneratedColumn('uuid')//'uuid'
     // id: string;
 
-    @PrimaryColumn()
+    @PrimaryColumn( )
     avanceId: string;
 
     @OneToOne(() => AvanceEntity, avance => avance.indice) 
