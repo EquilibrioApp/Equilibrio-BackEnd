@@ -4,7 +4,7 @@ import { EquivalenciaDto } from './dto/equivalencias.dto';
 import { EquivalenciaExpEntity } from './equivalenciaExp.entity';
 import { EquivalenciaExpService } from './equivalenciaExp.service';
 
-@Controller('/expediente/:doctor/equivalencia')
+@Controller('/expediente/equivalencia')
 export class EquivalenciaExpController {
     constructor(
         private equivalenciaService:EquivalenciaExpService,
