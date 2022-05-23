@@ -10,4 +10,4 @@ import { EquivalenciaExpService } from './equivalenciaExp.service';
   providers: [EquivalenciaExpService],
   controllers: [EquivalenciaExpController]
 })
-export class EquivalenciaModule {}
+export class EquivalenciaExpModule {}

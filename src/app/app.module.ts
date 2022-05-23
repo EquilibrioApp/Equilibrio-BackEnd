@@ -7,6 +7,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { AvancesModule } from 'src/avances/avances.module';
 import { DoctorModule } from 'src/doctor/doctor.module';
 import { EquivalenciaModule } from 'src/equivalencia/equivalencia.module';
+import { EquivalenciaExpModule } from 'src/equivalenciaExp/equivalenciaExp.module';
 import { ExpedienteModule } from 'src/expediente/expediente.module';
 import { PatientModule } from 'src/patient/patient.module';
 import { RegistroModule } from 'src/registros/registros.module';
@@ -28,7 +29,7 @@ import { UsersModule } from 'src/users/users.module';
       retryDelay: 3000,
       retryAttempts: 5,
       // dropSchema: true
-    }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule,
+    }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule, EquivalenciaExpModule,
         PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule
   ],
   controllers: []

@@ -7,17 +7,17 @@ import { EquivalenciaExpService } from './equivalenciaExp.service';
 @Controller('/expediente/equivalencia')
 export class EquivalenciaExpController {
     constructor(
-        private equivalenciaService:EquivalenciaExpService,
+        private equivalenciaExpService:EquivalenciaExpService,
     ){}
 
     @Get()
     findAll(){
-        return this.equivalenciaService.find();
+        return this.equivalenciaExpService.find();
     }
 
     @Get(':id') 
     findOne(@Param('id') id: string){
-        return this.equivalenciaService.findOne(id);
+        return this.equivalenciaExpService.findOne(id);
     }
 
     // @Post()
@@ -28,17 +28,17 @@ export class EquivalenciaExpController {
 
     @Post()
     creteMera(@Body() body: any): Promise<EquivalenciaExpEntity> {
-        return this.equivalenciaService.create(body);
+        return this.equivalenciaExpService.create(body);
     }
 
     @Put(':id') 
     creteAvance(@Param('id') id: string, @Body() body:any) {
-        return this.equivalenciaService.update(id, body);
+        return this.equivalenciaExpService.update(id, body);
     }
 
     @Delete(':id') 
     delete(@Param('id') id: string) {
-        return this.equivalenciaService.remove(id);
+        return this.equivalenciaExpService.remove(id);
     }
 
 }

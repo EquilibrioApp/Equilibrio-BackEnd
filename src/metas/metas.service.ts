@@ -24,6 +24,12 @@ export class MetasService {
         return item;
     }
 
+    async findOneExpediente( expedienteId : string){
+        const item = await this.metaRepo.findOne(expedienteId);
+        if(!item) throw new NotFoundException();
+        return item;
+    }
+
     async update(id: string, exp: Partial<MetaEntity>): Promise<MetaEntity> {
         const item = await this.findOne(id);
         return this.metaRepo.save({...item, ...exp});

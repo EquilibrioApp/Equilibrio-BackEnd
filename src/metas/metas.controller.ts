@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { MetaEntity } from './meta.entity';
 import { MetasService } from './metas.service';
 
-@Controller('meta')
+@Controller('meta/:expediente')
 export class MetasController {
     constructor(
         private metaService:MetasService,
@@ -16,6 +16,11 @@ export class MetasController {
     @Get(':id') 
     findOne(@Param('id') id: string){
         return this.metaService.findOne(id);
+    }
+
+    @Get(':id') 
+    findOneExpediente(@Param('expediente') expediente: string){
+        return this.metaService.findOneExpediente(expediente);
     }
 
     @Post()
