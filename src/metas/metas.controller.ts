@@ -18,7 +18,7 @@ export class MetasController {
         return this.metaService.findOne(id);
     }
 
-    @Get(':id') 
+    @Get(':expediente') 
     findOneExpediente(@Param('expediente') expediente: string){
         return this.metaService.findOneExpediente(expediente);
     }

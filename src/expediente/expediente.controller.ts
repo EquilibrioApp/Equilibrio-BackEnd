@@ -18,9 +18,9 @@ export class ExpedienteController {
         return this.expedienteService.find();
     }
 
-    @Get(':id') 
+    @Get('/expe/:id') 
     findOne(@Param('id') id: string){
-        return this.expedienteService.pesos(id);
+        return this.expedienteService.findOne(id);
     }
 
     @Get('/pacientes/:idEspecialista') 
