@@ -12,9 +12,6 @@ export class MetaEntity extends BaseEntity{
     expediente: ExpedienteEntity;
 
     @Column({default: ''})
-    pesoInicial: string;
-
-    @Column({default: ''})
     pesoMeta: string;
 
     @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})

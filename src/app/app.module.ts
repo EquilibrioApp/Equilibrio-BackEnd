@@ -29,7 +29,7 @@ import { UsersModule } from 'src/users/users.module';
       retryDelay: 3000,
       retryAttempts: 5,
       // dropSchema: true
-    }), AgendaModule, ExpedienteModule, EquivalenciaModule, EquivalenciaExpModule, RegistroModule,
+    }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule, EquivalenciaExpModule,
         PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule
   ],
   controllers: []
