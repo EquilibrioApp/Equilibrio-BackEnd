@@ -19,6 +19,7 @@ export class AgendaService {
         console.log(idEspecialista);
         
         const cita = await this.agendaRepo.find({where: [{idEspecialista: idEspecialista}]});
+        console.log(cita);
         
         return cita;
         
@@ -91,8 +92,21 @@ export class AgendaService {
     }
 
     async removeAgenda(id:string){
-        await this.agendaRepo.delete(id);
-        return true;
+      console.log('Id de la cita que se va a elminiar(agenda.service): ' + id);
+      try {
+        const resp = await flaskApi.delete(
+          `/calendar/delete/${id}`
+        );
+        if(resp.status === 200){
+          await this.agendaRepo.delete(id);
+          return resp.status;
+        }
+        else{
+          return resp.status
+        }
+      } catch (error) {
+        return false;
+      }
     }
 
 

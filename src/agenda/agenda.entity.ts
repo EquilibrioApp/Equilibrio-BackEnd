@@ -19,11 +19,11 @@ export class AgendaEntity{
     @Column({default:""})
     iCalUID : string;
 
-    @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
-    start: Date;
+    @Column({default:""})
+    start: string;
 
-    @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
-    end: Date;
+    @Column({default:""})
+    end: string;
 
     @Column({default:""})
     correoEspecialista: string;

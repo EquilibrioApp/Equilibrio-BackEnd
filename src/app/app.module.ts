@@ -7,6 +7,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { AvancesModule } from 'src/avances/avances.module';
 import { DoctorModule } from 'src/doctor/doctor.module';
 import { EquivalenciaModule } from 'src/equivalencia/equivalencia.module';
+import { EquivalenciaExpModule } from 'src/equivalenciaExp/equivalenciaExp.module';
 import { ExpedienteModule } from 'src/expediente/expediente.module';
 import { PatientModule } from 'src/patient/patient.module';
 import { RegistroModule } from 'src/registros/registros.module';
@@ -19,7 +20,7 @@ import { UsersModule } from 'src/users/users.module';
     TypeOrmModule.forRoot({ 
       type: 'postgres',
       host: process.env.DB_HOST,
-        port: 5433 ,
+      port: parseInt(<string>process.env.DB_PORT),
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
@@ -28,7 +29,7 @@ import { UsersModule } from 'src/users/users.module';
       retryDelay: 3000,
       retryAttempts: 5,
       // dropSchema: true
-    }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule,
+    }), AgendaModule, ExpedienteModule, EquivalenciaModule, EquivalenciaExpModule, RegistroModule,
         PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule
   ],
   controllers: []

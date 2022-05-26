@@ -3,8 +3,8 @@ export class AgendaDto {
   idPaciente: string;
   idEspecialista: string;
   iCalUID: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   correoEspecialista: string;
   correoPaciente: string;
 }

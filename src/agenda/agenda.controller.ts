@@ -28,6 +28,7 @@ export class AgendaController {
 
     @Delete(':id')
     delete(@Param('id') id: string) {
+        console.log('Id de la cita que se va a elminiar(agenda.controller): ' + id);
         return this.agendaService.removeAgenda(id);
     }
 }
