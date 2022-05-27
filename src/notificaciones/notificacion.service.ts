@@ -10,7 +10,7 @@ import { UserEntity } from '../users/users.entity';
 export class NotificacionService {
     constructor(
         @InjectRepository(NotificacionEntity) 
-        private readonly  agendaRepo: Repository<NotificacionEntity>,
+        private readonly  notificacionRepo: Repository<NotificacionEntity>,
         @InjectRepository(UserEntity) 
         private readonly  userRepo: Repository<NotificacionEntity>
     ){}
@@ -18,7 +18,7 @@ export class NotificacionService {
     async findAll(idPaciente:string): Promise<AgendaDto[]>{
         console.log(idPaciente);
         
-        const cita = await this.agendaRepo.find({where: [{idPaciente: idPaciente}]});
+        const cita = await this.notificacionRepo.find({where: [{idPaciente: idPaciente}]});
         console.log(cita);
         
         return cita;
@@ -26,7 +26,7 @@ export class NotificacionService {
     }
 
     async findOne(id:string)/* : Promise<CitasDto> */{
-      const cita = await this.agendaRepo.findOne(id);
+      const cita = await this.notificacionRepo.findOne(id);
       const datosPaciente = await this.userRepo.findOne(cita.idPaciente);
 
 
@@ -77,8 +77,8 @@ export class NotificacionService {
                 date.correoPaciente = agenda.correoPaciente;
                 date.id_agenda = resp.data.id;
                 date.iCalUID = resp.data.iCalUID;
-                const newDate = this.agendaRepo.create(date);
-                this.agendaRepo.save(newDate);
+                const newDate = this.notificacionRepo.create(date);
+                this.notificacionRepo.save(newDate);
                 return newDate;
               }
         } catch (error) {
@@ -89,9 +89,9 @@ export class NotificacionService {
     }
 
     async updateAgenda( id:string, body: any){
-        const agenda  = await this.agendaRepo.findOne(id);
-        this.agendaRepo.merge(agenda, body);
-        return this.agendaRepo.save(agenda);
+        const agenda  = await this.notificacionRepo.findOne(id);
+        this.notificacionRepo.merge(agenda, body);
+        return this.notificacionRepo.save(agenda);
     }
 
     async removeAgenda(id:string){
@@ -101,7 +101,7 @@ export class NotificacionService {
           `/calendar/delete/${id}`
         );
         if(resp.status === 200){
-          await this.agendaRepo.delete(id);
+          await this.notificacionRepo.delete(id);
           return resp.status;
         }
         else{
