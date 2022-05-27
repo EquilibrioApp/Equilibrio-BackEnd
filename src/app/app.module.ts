@@ -9,6 +9,7 @@ import { DoctorModule } from 'src/doctor/doctor.module';
 import { EquivalenciaModule } from 'src/equivalencia/equivalencia.module';
 import { EquivalenciaExpModule } from 'src/equivalenciaExp/equivalenciaExp.module';
 import { ExpedienteModule } from 'src/expediente/expediente.module';
+import { NotificacionModule } from 'src/notificaciones/notificacion.module';
 import { PatientModule } from 'src/patient/patient.module';
 import { RegistroModule } from 'src/registros/registros.module';
 import { UsersModule } from 'src/users/users.module';
@@ -19,8 +20,8 @@ import { UsersModule } from 'src/users/users.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({ 
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(<string>process.env.DB_PORT),
+      host: process.env.DB_HOST ,
+      port: parseInt(<string>process.env.BD_PORT),
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
@@ -30,7 +31,7 @@ import { UsersModule } from 'src/users/users.module';
       retryAttempts: 5,
       // dropSchema: true
     }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule, EquivalenciaExpModule,
-        PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule
+        PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule, NotificacionModule
   ],
   controllers: []
 })

@@ -47,6 +47,9 @@ export class NotificacionService {
               "dateTime": agenda.end,
               "timeZone": "America/Mexico_City"
             },
+            "recurrence": [
+              "RRULE:FREQ=WEEKLY;UNTIL=20110701T170000Z",
+            ],
             "attendees": [ { "email": agenda.correoPaciente}],
             "reminders": {
               "useDefault": false,
