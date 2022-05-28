@@ -47,7 +47,7 @@ export class ExpedienteService {
 
     async doctorsExpedients(idEspecialista: string){
 
-        const response = await this.expedienteRepo.find({where: [{doctor: idEspecialista}]});
+        const response = await this.expedienteRepo.find({where: [{doctor: idEspecialista}], order: {nombre: "ASC"}});
 
         return response;
     }

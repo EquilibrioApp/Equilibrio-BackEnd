@@ -54,7 +54,6 @@ export class NotificacionService {
             "reminders": {
               "useDefault": false,
               "overrides": [
-                // { "method": "email", "minutes": 30 },
                 { "method": "popup", "minutes": 1 }
               ]
             }

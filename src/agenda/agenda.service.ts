@@ -86,9 +86,42 @@ export class AgendaService {
     }
 
     async updateAgenda( id:string, body: any){
-        const agenda  = await this.agendaRepo.findOne(id);
-        this.agendaRepo.merge(agenda, body);
-        return this.agendaRepo.save(agenda);
+        console.log(body);
+        const template = {
+          "summary": "Cita Equilibrio",
+          "location": "",
+          "description": "",
+          "start": {
+            "dateTime": body.start,
+            "timeZone": "America/Mexico_City"
+          },
+          "end": {
+            "dateTime": body.end,
+            "timeZone": "America/Mexico_City"
+          },
+          "attendees": [{ "email": body.correoEspecialista}, { "email": body.correoPaciente}],
+          "reminders": {
+            "useDefault": false,
+            "overrides": [
+              { "method": "email", "minutes": 30 },
+              { "method": "popup", "minutes": 1 }
+            ]
+          }
+      }
+
+      try {
+        const resp = await flaskApi.put<GoogleDataResponseDto>(
+          `/calendar/update/${id}`,
+           template
+        );
+        if (resp.status === 200) {
+          const agenda  = await this.agendaRepo.findOne(id);
+          this.agendaRepo.merge(agenda, body);
+          return this.agendaRepo.save(agenda);
+        }
+      } catch (error) {
+        
+      }
     }
 
     async removeAgenda(id:string){

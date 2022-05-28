@@ -6,6 +6,7 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  NotAcceptableException,
 } from '@nestjs/common';
 
 import flaskApi from '../utils/flask';
@@ -68,15 +69,21 @@ export class UsersService {
           console.log(check);
           const resp = await flaskApi.post<CheckCedula>(
             '/api/registro/especialista',
-             check,
+            check,
           );
-          if (resp.status === 200) console.log(resp.status);
+          if (resp.status === 200) {
+            const newDoctor = await this.doctorRepository.create(doctor);
+            this.doctorRepository.save(newDoctor);
+          }
+          else{
+            throw new NotAcceptableException('No se encuentra la cedula');
+          }
         } catch (err) {
           console.log(err);
         }
 
-        const newDoctor = await this.doctorRepository.create(doctor);
-        this.doctorRepository.save(newDoctor);
+        // const newDoctor = await this.doctorRepository.create(doctor);
+        // this.doctorRepository.save(newDoctor);
       } else {
         const patient = new PatientEntity();
         patient.nutriCodigo = user.nutriCodigoId;
