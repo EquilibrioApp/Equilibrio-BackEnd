@@ -17,9 +17,18 @@ export class AgendaService {
 
     async findAll(idEspecialista:string): Promise<AgendaDto[]>{
         console.log(idEspecialista);
+        console.log(new Date().toISOString().substring(0, 10));
+
         
         const cita = await this.agendaRepo.find({where: [{idEspecialista: idEspecialista}]});
-        console.log(cita);
+        let citas = [];
+        cita.forEach(item => {
+          if(item.id_agenda.substring(0, 10) !== new Date().toISOString().substring(0, 10)){
+            citas.push(item);
+            console.log('Si entra al if');
+          }
+        });
+        console.log(citas);
         
         return cita;
         

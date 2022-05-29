@@ -7,6 +7,7 @@ import {
   Inject,
   Injectable,
   NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 
 import flaskApi from '../utils/flask';
@@ -35,78 +36,106 @@ export class UsersService {
   async create(user: UsersDto): Promise<UserResponseDto> {
     const emailExists = await this.findByEmail(user.email);
 
+    console.log(emailExists);
+
     if (emailExists === undefined) {
-      const password = encodePassword(user.password);
-      const newUserA = new UserEntity();
-      newUserA.name = user.name;
-      newUserA.userType = user.userType;
-      newUserA.fathersLastName = user.fathersLastName;
-      newUserA.mothersLastName = user.mothersLastName;
-      newUserA.email = user.email;
-      newUserA.password = password;
-      newUserA.sex = user.sex;
-      newUserA.birthDate = user.birthDate;
-      newUserA.phoneNumber = user.phoneNumber;
-
-      const newUser = await this.userRepository.create(newUserA);
-      const response = await this.userRepository.save(newUser);
-
+      console.log('Email no esta en uso...');
       if (user.userType === '1') {
-        const doctor = new DoctorEntity();
-        doctor.cedula = user.cedula;
-        doctor.houseNumber = user.houseNumber;
-        doctor.streetName = user.streetName;
-        doctor.postalCode = user.postalCode;
-        doctor.user = response;
+        console.log('Tipo de usuario es 1');
+        const cedulaExists = await this.findByCedula(user.cedula);
+        console.log('Resultado del chequeo de la cedula: ' + cedulaExists);
+        if (cedulaExists === undefined) {
+          console.log('La cedula no esta en uso...');
+          try {
+            const check = {
+              nombre: user.name,
+              aPaterno: user.fathersLastName,
+              aMaterno: user.mothersLastName,
+              cedula: user.cedula,
+            };
+            console.log(check);
+            const resp = await flaskApi.post<CheckCedula>(
+              '/api/registro/especialista',
+              check,
+            );
+            console.log(resp.data.name);
+            if (resp.status !== 200) {
+              throw new NotFoundException('No se encuentra la cedula');
+            } else {
+              const password = encodePassword(user.password);
+              const newUserA = new UserEntity();
+              newUserA.name = user.name;
+              newUserA.userType = user.userType;
+              newUserA.fathersLastName = user.fathersLastName;
+              newUserA.mothersLastName = user.mothersLastName;
+              newUserA.email = user.email;
+              newUserA.password = password;
+              newUserA.sex = user.sex;
+              newUserA.birthDate = user.birthDate;
+              newUserA.phoneNumber = user.phoneNumber;
 
-        try {
-          const check = {
-            nombre: user.name,
-            aPaterno: user.fathersLastName,
-            aMaterno: user.mothersLastName,
-            cedula: user.cedula,
-          };
-          console.log(check);
-          const resp = await flaskApi.post<CheckCedula>(
-            '/api/registro/especialista',
-            check,
-          );
-          if (resp.status === 200) {
-            const newDoctor = await this.doctorRepository.create(doctor);
-            this.doctorRepository.save(newDoctor);
+              const newUser = await this.userRepository.create(newUserA);
+              const response = await this.userRepository.save(newUser);
+              const doctor = new DoctorEntity();
+              doctor.cedula = user.cedula;
+              doctor.houseNumber = user.houseNumber;
+              doctor.streetName = user.streetName;
+              doctor.postalCode = user.postalCode;
+              doctor.user = response;
+              const newDoctor = await this.doctorRepository.create(doctor);
+              this.doctorRepository.save(newDoctor);
+              const token = await this.authService.signToken(newUser);
+              return { token, response };
+            }
+          } catch (err) {
+            throw new NotFoundException('No se encuentra la cedula');
           }
-          else{
-            throw new NotAcceptableException('No se encuentra la cedula');
-          }
-        } catch (err) {
-          console.log(err);
+
+          // const newDoctor = await this.doctorRepository.create(doctor);
+          // this.doctorRepository.save(newDoctor);
+        } else {
+          throw new BadRequestException('La cedula esta en uso');
         }
-
-        // const newDoctor = await this.doctorRepository.create(doctor);
-        // this.doctorRepository.save(newDoctor);
       } else {
+        const password = encodePassword(user.password);
+        const newUserA = new UserEntity();
+        newUserA.name = user.name;
+        newUserA.userType = user.userType;
+        newUserA.fathersLastName = user.fathersLastName;
+        newUserA.mothersLastName = user.mothersLastName;
+        newUserA.email = user.email;
+        newUserA.password = password;
+        newUserA.sex = user.sex;
+        newUserA.birthDate = user.birthDate;
+        newUserA.phoneNumber = user.phoneNumber;
+
+        const newUser = await this.userRepository.create(newUserA);
+        const response = await this.userRepository.save(newUser);
         const patient = new PatientEntity();
         patient.nutriCodigo = user.nutriCodigoId;
         patient.user = response;
 
         const newPatient = await this.patientRepository.create(patient);
         this.patientRepository.save(newPatient);
+
+        const token = await this.authService.signToken(newUser);
+        return { token, response };
       }
 
-      const token = await this.authService.signToken(newUser);
-
-      //TODO No regresar la contrasena al crear usuarios
-      //const { password, ...response } = user;
-
-      return { token, response };
+      // const token = await this.authService.signToken(newUser);
+      // return { token, response };
     }
-
     //En caso de que el email ya esxista
     throw new BadRequestException('Email en uso');
   }
 
   async findByEmail(email: string): Promise<UsersDto | null> {
     return this.userRepository.findOne({ where: { email } });
+  }
+
+  async findByCedula(cedula: string): Promise<any> {
+    console.log(cedula);
+    return this.doctorRepository.findOne({ where: { cedula } });
   }
 
   async findById(id: string): Promise<UsersDto> {
