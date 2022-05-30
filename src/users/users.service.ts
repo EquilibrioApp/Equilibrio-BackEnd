@@ -17,6 +17,7 @@ import { AuthService } from '../auth/auth.service';
 import { DoctorEntity } from '../doctor/doctor.entity';
 import { PatientEntity } from '../patient/patient.entity';
 import { UsersDto, UserResponseDto, CheckCedula } from './dto/users.dto';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 
 @Injectable()
 export class UsersService {
@@ -27,6 +28,8 @@ export class UsersService {
     private readonly doctorRepository: Repository<DoctorEntity>,
     @InjectRepository(PatientEntity) //Inyectas el repositorio que necesites y al cual le vas a pasar el id
     private readonly patientRepository: Repository<PatientEntity>,
+    @InjectRepository(PatientEntity) //Inyectas el repositorio que necesites y al cual le vas a pasar el id
+    private readonly expedienteRepository: Repository<ExpedienteEntity>,
     @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
     private httpService: HttpService,
@@ -36,7 +39,12 @@ export class UsersService {
   async create(user: UsersDto): Promise<UserResponseDto> {
     const emailExists = await this.findByEmail(user.email);
 
-    console.log(emailExists);
+    console.log('NutriCodigo introducido por el paciente: ' + user.nutriCodigoId)
+
+    // const nutriCodigoExists = await this.findByNutriCodigo(user.nutriCodigoId);
+    // console.log('Respuesta del nutriCodigo en la Base de Datos: ' + nutriCodigoExists);
+
+    // console.log(emailExists);
 
     if (emailExists === undefined) {
       console.log('Email no esta en uso...');
@@ -97,29 +105,33 @@ export class UsersService {
           throw new BadRequestException('La cedula esta en uso');
         }
       } else {
-        const password = encodePassword(user.password);
-        const newUserA = new UserEntity();
-        newUserA.name = user.name;
-        newUserA.userType = user.userType;
-        newUserA.fathersLastName = user.fathersLastName;
-        newUserA.mothersLastName = user.mothersLastName;
-        newUserA.email = user.email;
-        newUserA.password = password;
-        newUserA.sex = user.sex;
-        newUserA.birthDate = user.birthDate;
-        newUserA.phoneNumber = user.phoneNumber;
+        // if (nutriCodigoExists !== undefined) {
+          const password = encodePassword(user.password);
+          const newUserA = new UserEntity();
+          newUserA.name = user.name;
+          newUserA.userType = user.userType;
+          newUserA.fathersLastName = user.fathersLastName;
+          newUserA.mothersLastName = user.mothersLastName;
+          newUserA.email = user.email;
+          newUserA.password = password;
+          newUserA.sex = user.sex;
+          newUserA.birthDate = user.birthDate;
+          newUserA.phoneNumber = user.phoneNumber;
 
-        const newUser = await this.userRepository.create(newUserA);
-        const response = await this.userRepository.save(newUser);
-        const patient = new PatientEntity();
-        patient.nutriCodigo = user.nutriCodigoId;
-        patient.user = response;
+          const newUser = await this.userRepository.create(newUserA);
+          const response = await this.userRepository.save(newUser);
+          const patient = new PatientEntity();
+          patient.nutriCodigo = user.nutriCodigoId;
+          patient.user = response;
 
-        const newPatient = await this.patientRepository.create(patient);
-        this.patientRepository.save(newPatient);
+          const newPatient = await this.patientRepository.create(patient);
+          this.patientRepository.save(newPatient);
 
-        const token = await this.authService.signToken(newUser);
-        return { token, response };
+          const token = await this.authService.signToken(newUser);
+          return { token, response };
+        // } else {
+        //   throw new NotFoundException('El nutriCodigo ya esta en uso');
+        // }
       }
 
       // const token = await this.authService.signToken(newUser);
@@ -137,6 +149,13 @@ export class UsersService {
     console.log(cedula);
     return this.doctorRepository.findOne({ where: { cedula } });
   }
+
+  // async findByNutriCodigo(nutriCodigo: ExpedienteEntity): Promise<any> {
+  //   console.log(
+  //     'NutriCodigo en la funcion para revisar si existe: ' + nutriCodigo,
+  //   );
+  //   return this.expedienteRepository.findOne({where: {nutriCodigo}});
+  // }
 
   async findById(id: string): Promise<UsersDto> {
     return this.userRepository.findOne(id);
