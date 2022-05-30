@@ -18,6 +18,11 @@ export class EjercicioController {
         return this.ejercicioService.findOne(id);
     }
 
+    @Get('/expediente/:expediente') 
+    findDoctor(@Param('expediente') expediente: string){
+        return this.ejercicioService.findDoctor(expediente);
+    }
+
     @Post()
     create(@Body() body: any): Promise<EjercicioEntity> {
         return this.ejercicioService.create(body);

@@ -24,6 +24,12 @@ export class EjercicioService {
         return item;
     }
 
+    async findDoctor( expediente : string){
+        const item = await this.ejercicioRepo.find({where:{expediente}});
+        if(!item) throw new NotFoundException();
+        return item;
+    }
+
     async update(id: string, exp: Partial<EjercicioEntity>): Promise<EjercicioEntity> {
         const item = await this.findOne(id);
         return this.ejercicioRepo.save({...item, ...exp});

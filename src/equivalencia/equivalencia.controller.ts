@@ -1,4 +1,5 @@
 import { Controller, Get, Delete, Post, Put, Param, Body } from '@nestjs/common';
+import { DoctorEntity } from 'src/doctor/doctor.entity';
 import { UserEntity } from 'src/users/users.entity';
 import { EquivalenciaDto } from './dto/equivalencias.dto';
 import { EquivalenciaEntity } from './equivalencia.entity';
@@ -18,6 +19,11 @@ export class EquivalenciaController {
     @Get(':id') 
     findOne(@Param('id') id: string){
         return this.equivalenciaService.findOne(id);
+    }
+
+    @Get('/doctor/:idExpediente') 
+    findDoctor(@Param('idDoctor') idDoctor: DoctorEntity){
+        return this.equivalenciaService.findDoctor(idDoctor);
     }
 
     // @Post()

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/dto/auth.dto';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import { UserEntity } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
 import { EquivalenciaDto } from './dto/equivalencias.dto';
@@ -20,6 +21,12 @@ export class EquivalenciaExpService {
         return this.equivalenciaRepo.save(item);
     }
 
+
+    async findDoctor( expediente : string){
+        const item = await this.equivalenciaRepo.find({where:{expediente}});
+        if(!item) throw new NotFoundException();
+        return item;
+    }
 
     // async create(doctor: UserEntity, exp: Partial<EquivalenciaDto>): Promise<EquivalenciaDto> {
     //     const alimento = new EquivalenciaEntity();

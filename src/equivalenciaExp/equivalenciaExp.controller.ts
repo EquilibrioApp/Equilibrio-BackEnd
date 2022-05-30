@@ -1,10 +1,11 @@
 import { Controller, Get, Delete, Post, Put, Param, Body } from '@nestjs/common';
+import { ExpedienteEntity } from 'src/expediente/expediente.entity';
 import { UserEntity } from 'src/users/users.entity';
 import { EquivalenciaDto } from './dto/equivalencias.dto';
 import { EquivalenciaExpEntity } from './equivalenciaExp.entity';
 import { EquivalenciaExpService } from './equivalenciaExp.service';
 
-@Controller('/expediente/equivalencia')
+@Controller('expediente/equivalencia')
 export class EquivalenciaExpController {
     constructor(
         private equivalenciaExpService:EquivalenciaExpService,
@@ -18,6 +19,11 @@ export class EquivalenciaExpController {
     @Get(':id') 
     findOne(@Param('id') id: string){
         return this.equivalenciaExpService.findOne(id);
+    }
+
+    @Get('/expediente/:expediente') 
+    findDoctor(@Param('expediente') expediente: string){
+        return this.equivalenciaExpService.findDoctor(expediente);
     }
 
     // @Post()

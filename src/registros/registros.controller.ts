@@ -19,6 +19,11 @@ export class RegistrosController {
         return this.registrosService.findOne(id);
     }
 
+    @Get('/expediente/:expediente') 
+    findDoctor(@Param('expediente') expediente: string){
+        return this.registrosService.findDoctor(expediente);
+    }
+
     @Post()
     create(@Body() body: any): Promise<RegistroEntity> {
         return this.registrosService.create(body);

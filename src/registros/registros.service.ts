@@ -37,6 +37,12 @@ export class RegistrosService {
         return item;
     }
 
+    async findDoctor( expediente : string){
+        const item = await this.registroRepo.find({where:{expediente}});
+        if(!item) throw new NotFoundException();
+        return item;
+    }
+
     async update(id: string, exp: Partial<RegistroEntity>): Promise<RegistroEntity> {
         const item = await this.findOne(id);
         return this.registroRepo.save({...item, ...exp});
