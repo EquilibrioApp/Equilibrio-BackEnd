@@ -17,22 +17,34 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   //Rutas de la application
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({ 
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      url: process.env.DATABASE_URL,
       type: 'postgres',
-      host: process.env.DB_HOST ,
-      port: parseInt(<string>process.env.BD_PORT),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      entities: ["dist/**/*.entity{.ts,.js}"],
-      synchronize: true,
-      retryDelay: 3000,
-      retryAttempts: 5,
-      // dropSchema: true
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: true, // This for development
+      autoLoadEntities: true,
     }), AgendaModule, ExpedienteModule, EquivalenciaModule, RegistroModule, EquivalenciaExpModule,
         PatientModule, DoctorModule, AuthModule, UsersModule, AvancesModule, NotificacionModule
   ],
   controllers: []
 })
 export class AppModule {}
+
+// ConfigModule.forRoot({ isGlobal: true }),
+    // TypeOrmModule.forRoot({ 
+    //   type: 'postgres',
+    //   // host: process.env.DB_HOST ,
+    //   // port: parseInt(<string>process.env.BD_PORT),
+    //   // username: process.env.DB_USER,
+    //   // password: process.env.DB_PASSWORD,
+    //   // database: process.env.DB_DATABASE,
+    //   // entities: ["dist/**/*.entity{.ts,.js}"],
+    //   url: process.env.DB_URL,
+    //   synchronize: true,
+    //   retryDelay: 3000,
+    //   retryAttempts: 5,
+    //   // dropSchema: true
